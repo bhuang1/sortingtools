@@ -1,0 +1,122 @@
+@import url('http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css');
+ .sort-area {
+    height: 25%;
+    width: 100%;
+}
+.card {
+    margin-top: 120px;
+    background-size: cover;
+    display: inline-block;
+    height: 160px;
+    width: 120px;
+    position: relative;
+    float: right;
+    /* Mozilla */
+    -moz-border-radius: 15px;
+    /* Chrome */
+    -webkit-border-radius: 15px;
+    /* The rest */
+    border-radius: 15px;
+}
+
+.overlay {
+    opacity: 0.5;
+    height: 160px;
+    width: 120px;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 0px;
+    height: 300px;
+    background-color: gray;
+    -webkit-transition: max-height 0.5s;
+    transition: max-height 0.5s;
+}
+.fTab {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 1em;
+    background-color: gray;
+    -webkit-transition: bottom 0.5s;
+    transition: bottom 0.5s;
+}
+.fTab.active {
+    bottom: 300px;
+}
+.fTab.active + footer {
+    max-height: 300px;
+}
+.droppable {
+    clear:both;
+    /* background: #98bf21; */
+    background-image: url(http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_blue.svg);
+    background-size: cover;
+    display: inline-block;
+    height: 160px;
+    width: 120px;
+    position:fixed;
+    top:300px;
+    right:10px;
+    float: right;
+    /* Mozilla */
+    -moz-border-radius: 15px;
+    /* Chrome */
+    -webkit-border-radius: 15px;
+    /* The rest */
+    border-radius: 15px;
+}
+.droppable.active {
+    background: #FF00FF;
+}
+.droppable.hovered {
+    background: #CCF;
+}
+.dropped {
+    background: #f52;
+}
+.min-text {
+    clear:both;
+    display: inline-block;
+    position:fixed;
+    top:475px;
+    right:35px;
+    float: right;
+    /* Mozilla */
+    -moz-border-radius: 15px;
+    /* Chrome */
+    -webkit-border-radius: 15px;
+    /* The rest */
+    border-radius: 15px;
+}
+/* popover CSS starts here */
+#hintButton {
+    position:absolute;
+    top:95%;
+    right:50%;
+}
+.popover {
+    max-width: 800px;
+}
+#stats {
+    clear:both;
+    display: inline-block;
+    position:fixed;
+    top:395px;
+    left:35px;
+    float: left;
+    /* Mozilla */
+    -moz-border-radius: 15px;
+    /* Chrome */
+    -webkit-border-radius: 15px;
+    /* The rest */
+    border-radius: 15px;
+}
+
+.alert{
+    width:400px;
+}
