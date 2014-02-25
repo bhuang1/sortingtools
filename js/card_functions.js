@@ -295,7 +295,11 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
                 spacifyCards(globals);
 				
 				// Extra call to chainsort, allows us to sort cards that get swapped into place
-				chainSort(globals, startIndex-1);
+				// Added the check as a bug fix for https://trello.com/c/hFZl4hab
+				// still working as we expected for swapping.
+				if (isSorted(globals, startIndex-1)){
+					chainSort(globals, startIndex-1);
+				}
             // Not legal - return to previous position
             } else {
                 $(ui.item).insertAfter(draggable_sibling);
