@@ -25,7 +25,4 @@ function detectFinish(globals) {
  */
 function showFinish() {
     $('.alert').show();
-
 }
-
-

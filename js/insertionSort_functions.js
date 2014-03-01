@@ -36,12 +36,6 @@ function assistedLegalMove(globals, ui, start) {
  * @param id      - id of the div element to check
  */
 function isSorted(globals, id) {
-    for (var i = 0; i < globals.NUM_CARDS; i++) {
-        current = $('#0');
-        if (current.index() != i)
-            return false;
-    }
-    return true;
 }
 
 /*

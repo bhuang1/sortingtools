@@ -12,7 +12,9 @@ $(document).ready(function () {
         this.totFlip = 0,
         this.ops = 0,
         this.mem = 0,
-        this.maxCard = undefined
+        this.maxCard = undefined,
+        this.blockStart = undefined,
+        this.blockEnd = undefined
     }
 
     var globals = new Globals();
