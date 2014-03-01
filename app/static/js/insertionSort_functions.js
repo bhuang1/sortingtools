@@ -17,7 +17,10 @@
  * @return Whether the attempted position is legal
  */
 function legalMove(globals, ui, start) {
-    return true;
+    var cardNum = parseInt($(ui.item).attr('id'));
+    return (!globals.cards[cardNum].sorted &&
+        !globals.cards[parseInt($(ui.item).next().attr('id'))].sorted &&
+		!($(ui.item).index() == start));
 }
 
 /*
