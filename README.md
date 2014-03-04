@@ -22,8 +22,9 @@ Often times instructors may wish to gauge the class's understanding of a particu
 
 Front end:
 
-* JQuery
-* JQuery UI
+* JQuery 2.0.2
+* JQuery UI 1.10.3
+* Bootstrap 3.1.1
 
 Back end:
 
