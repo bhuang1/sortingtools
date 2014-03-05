@@ -86,6 +86,24 @@ def add_entry():
   return redirect(url_for('show_entries'))
 
 
+@app.route('/newStat', methods=['POST'])
+def add_stat():
+  print "inside newStat"
+  print request
+  print request.form
+  for i in request.form:
+    print i
+  print request.form['mem']
+  print request.form['ops']
+
+  db = get_db()
+  db.execute('insert into entries (mem, ops) values (?, ?)',
+      [request.form['mem'], request.form['ops']])
+  db.commit()
+  flash('Posted results to the database!')
+  return redirect(url_for('show_entries'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   error = None

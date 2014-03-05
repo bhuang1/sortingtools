@@ -94,13 +94,13 @@
     <div class="min-text">Maximum</div>
 
     <!-- Stats -->
-    <form id="stats">
+    <form id="stats" action="{{ url_for('add_stat') }}" method=post>
         <label style="font-weight:normal;">Memory:
-            <input type="text" id="mem" name="mem" disabled></input>
+            <input type="text" id="mem" name="mem" readonly></input>
         </label>
         <br>
         <label style="font-weight:normal;">Operations:
-            <input type="text" id="ops" name="ops" disabled></input>
+            <input type="text" id="ops" name="ops" readonly></input>
         </label>
         <br> <input type="submit" class="btn btn-info" value="Submit">
     </form>
