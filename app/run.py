@@ -15,6 +15,7 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 
+
 # Create application
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -65,10 +66,12 @@ def close_db(error):
 
 @app.route('/')
 def show_entries():
-    db = get_db()
-    cur = db.execute('select * from entries order by id desc')
-    entries = cur.fetchall()
-    return render_template('show_entries.html', entries=entries)
+  if not session.get('logged_in'):
+    abort(401)
+  db = get_db()
+  cur = db.execute('select * from entries')
+  entries = cur.fetchall()
+  return render_template('show_entries.html', entries=entries)
 
 
 @app.route('/add', methods=['POST'])
@@ -79,7 +82,7 @@ def add_entry():
   db.execute('insert into entries (title, text) values (?, ?)',
                [request.form['title'], request.form['text']])
   db.commit()
-  flash('New entry was successfully posted')
+  flash('Posted results to the database!')
   return redirect(url_for('show_entries'))
 
 
@@ -98,28 +101,34 @@ def login():
   return render_template('login.html', error=error)
 
 
+@app.route('/selectionSort')
+def selectionSort():
+  return render_template('selectionSort.html')
+
+
 @app.route('/logout')
 def logout():
   session.pop('logged_in', None)
   flash('You were logged out')
-  return redirect(url_for('show_entries'))
+  return redirect(url_for('login'))
 
-#@app.errorhandler(404)
-#def page_not_found(e):
-#    return render_template('404.html'), 404
 
-#@app.route('/')
-#def homePage():
-#  return render_template('layout.html')
-#
-#@app.route('/insertionSort')
-#def insertionSort():
-#  return redirect(url_for('static', filename='insertionSort.html'))
-#
-#@app.route('/selectionSort')
-#def selectionSort():
-#  return redirect(url_for('static', filename='selectionSort.html'))
+@app.errorhandler(404)
+def page_not_found(e):
+  '''Handle 404 errors.'''
+  return render_template('404.html'), 404
+
+
+@app.errorhandler(401)
+def unauthorized(e):
+  '''Handle 401 errors.'''
+  return render_template('401.html'), 401
+
 
 if __name__ == "__main__":
+  try:
+    db = get_db()
+  except Exception:
+    init_db()
   app.debug = True
   app.run()
