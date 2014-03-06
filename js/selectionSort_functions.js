@@ -1,4 +1,4 @@
-/**
+/*
  * Handles all selection sort specific functions.
  * @author Betty Huang
  * @author Sucharita Jayanti
@@ -10,7 +10,7 @@
  * @since 0.1
  */
  
-/**
+/*
  * Check if a move is legal in insertion sort.
  * @param globals - object containing global variables
  * @param ui      - JQuery ui element
@@ -23,7 +23,7 @@ function legalMove(globals, ui, start) {
 		!($(ui.item).index() == start));
 }
 
-/**
+/*
  * Checks if card is sorted or not so as to set the .sorted var
  * @param globals - object containing global variables
  * @param id      - id of the div element to check
@@ -34,7 +34,7 @@ function isSorted(globals, id) {
 			|| (!isNaN(parseInt(card.prev().attr('id'))) && globals.cards[id - 1].sorted && parseInt(card.prev().attr('id')) === id-1));
 }
 
-/**
+/*
  * Starting at the card with index cardIndex, sets all following
  * cards that happen to be sorted as sorted
  * @param globals   - object containing global variables
@@ -42,14 +42,12 @@ function isSorted(globals, id) {
  */
  
 function chainSort(globals, cardIndex) {
+    //var cards = globals.cards;
     // Propagates card flips
     while (true) {
         ++cardIndex;
         if ($('#' + cardIndex).index() == cardIndex && globals.cards[cardIndex].flipped && $('#' + (cardIndex-1)).index() == cardIndex-1) {
-            globals.cards[cardIndex].sorted = true;
-            $('#' + cardIndex).css({
-                backgroundImage:'url(' + globals.cards[cardIndex].sortedBack + ')'
-            });
+            setSorted(globals, cardIndex);
         } else {
             if (detectFinish(globals)) {
                 showFinish();

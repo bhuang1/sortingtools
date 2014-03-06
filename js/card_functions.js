@@ -72,6 +72,8 @@ function createCardHTML(globals, divElem) {
     var newHTML = [];
     var cardArray = globals.cardArray;
     for (var i = 0; i < globals.NUM_CARDS; i++) {
+  //      newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"></div>');
+  //  }
 		newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"><div class="overlay" style="background-image:url(' + cardArray[i].frontFace + ');"></div></div>');
     }
 
@@ -167,22 +169,26 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
             case 3:
                 // If you're allowed to flip up any more cards
                 if (globals.totFlip < globals.MAX_FLIP) {
-                    // Update stats
-                    globals.totFlip++;
-                    maxMem(globals);
-                    setNewMem(globals);
-
                     if (this != globals.maxCard) {
                         incrementOps(globals);
                         setNewOps(globals);
                     }
+					
+					// Update stats
+					if (!globals.cards[cardIndex].flipped) {
+						reveal(globals, cardIndex);
+					}
+					
+					if (globals.maxCard === undefined) {
+						globals.totFlip++;
+						maxMem(globals);
+						setNewMem(globals);
+					}
 
                     // Change maxCard values and positions
                     resetPosition(globals);
                     globals.maxCard = new MaxCard(this);
                     maxPosition(globals);
-                    reveal(globals, cardIndex);
-
 
                     // if it's sorted as a result
                     if (isSorted(globals, cardIndex)) {
@@ -210,6 +216,9 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
 function reveal(globals, id) {
     if (globals.totFlip < globals.MAX_FLIP) {
         globals.cards[id].flipped = true;
+		globals.totFlip++;
+        maxMem(globals);
+        setNewMem(globals);
         $('#' + id).css({
             backgroundImage: 'url(' + globals.cards[id].frontFace + ')'
         });
@@ -231,28 +240,15 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
         // If it's face up, make face down
         else if (globals.cards[cardIndex].flipped) {
             flipOver(globals, cardIndex);
-            globals.totFlip--;
         } 
         // if it's face down
-        else {
+        else if (globals.totFlip < globals.MAX_FLIP) {
             incrementOps(globals);
             setNewOps(globals);
-
-             if (globals.totFlip < globals.MAX_FLIP) {
-                globals.totFlip++;
-                maxMem(globals);
-                setNewMem(globals);
-                reveal(globals, cardIndex);
-             }
+            reveal(globals, cardIndex);
 
             // Sort this and all others that can be sorted
             if (isSorted(globals, cardIndex)) {
-                reveal(globals, cardIndex);
-                if (globals.totFlip === globals.mem) {
-                    globals.totFlip++;
-                    maxMem(globals);
-                    setNewMem(globals);
-                }
                 setSorted(globals, cardIndex);
                 chainSort(globals, cardIndex);
             }
@@ -299,7 +295,8 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
 					chainSort(globals, startIndex-1);
 				}
             // Not legal - return to previous position
-            } else {
+            } 
+			else {
                 $(ui.item).insertAfter(draggable_sibling);
                 $(ui.item).css({
                     'top': '0px'
@@ -309,11 +306,12 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
             // Handle sortedness as a result of the drag / drop
             if (isSorted(globals, cardIndex)) {
 
-			setSorted(globals, cardIndex);
+				setSorted(globals, cardIndex);
                 chainSort(globals, cardIndex);
 
-                if (detectFinish(globals.NUM_CARDS))
+                if (detectFinish(globals.NUM_CARDS)) {
                     showFinish();
+				}
             }
         }
     });
