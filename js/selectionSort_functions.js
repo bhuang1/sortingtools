@@ -30,11 +30,7 @@ function legalMove(globals, ui, start) {
  */
 function isSorted(globals, id) {
 	var card = $('#' + id);
-//	return globals.cards[id].sorted || (globals.cards[id].flipped && ((id == 0 && card.index() == 0)
-//        || (card.index() == id && isSorted(globals, id - 1))));
-	if (!isNaN(parseInt(card.prev().attr('id')))) {}
-		// alert(globals.cards[id - 1].sorted);
-	return (globals.cards[id].flipped || globals.maxCard.value.id == id) && ((id == 0 && card.index() == 0)
+	return (globals.cards[id].flipped || (globals.maxCard !== undefined && globals.maxCard.value.id == id)) && ((id == 0 && card.index() == 0)
 			|| (!isNaN(parseInt(card.prev().attr('id'))) && globals.cards[id - 1].sorted && parseInt(card.prev().attr('id')) === id-1));
 
   //  var card = $('#' + id);
