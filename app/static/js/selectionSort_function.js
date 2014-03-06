@@ -56,3 +56,4 @@ function chainSort(globals, cardIndex) {
         }
     }
 }
+

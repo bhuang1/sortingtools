@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h2>{{ entry.who|safe }}</h2></li>
+    Memory: {{ entry.mem }}
+    <br />
+    Operations: {{ entry.ops|safe }}
+    <br />
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

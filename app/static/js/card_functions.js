@@ -295,8 +295,7 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
 					chainSort(globals, startIndex-1);
 				}
             // Not legal - return to previous position
-            } 
-			else {
+            } else {
                 $(ui.item).insertAfter(draggable_sibling);
                 $(ui.item).css({
                     'top': '0px'
@@ -305,8 +304,7 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
 
             // Handle sortedness as a result of the drag / drop
             if (isSorted(globals, cardIndex)) {
-
-				setSorted(globals, cardIndex);
+                setSorted(globals, cardIndex);
                 chainSort(globals, cardIndex);
 
                 if (detectFinish(globals.NUM_CARDS)) {

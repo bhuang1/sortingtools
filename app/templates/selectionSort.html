@@ -15,18 +15,18 @@
 
 
     <!-- Our Code -->
-    <script type="text/javascript" src="js/card_functions.js"></script>
-    <script type="text/javascript" src="js/finish_functions.js"></script>
-    <script type="text/javascript" src="js/maxCard_functions.js"></script>
-    <script type="text/javascript" src="js/popover_functions.js"></script>
-    <script type="text/javascript" src="js/selectionSort_functions.js"></script>
-    <script type="text/javascript" src="js/stats_functions.js"></script>
-    <script type="text/javascript" src="js/selectionSort_skeleton.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/card_functions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/finish_functions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/maxCard_functions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/popover_functions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/selectionSort_functions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/stats_functions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/selectionSort_skeleton.js') }}"></script>
     
 
     <!-- CSS -->
     <!-- Our CSS -->
-    <link rel="stylesheet" type="text.css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body oncontextmenu="return false;">
@@ -94,15 +94,15 @@
     <div class="min-text">Maximum</div>
 
     <!-- Stats -->
-    <form id="stats">
+    <form id="stats" action="{{ url_for('add_stat') }}" method=post>
         <label style="font-weight:normal;">Memory:
-            <input type="text" id="mem" name="mem" disabled></input>
+            <input type="text" id="mem" name="mem" readonly></input>
         </label>
         <br>
         <label style="font-weight:normal;">Operations:
-            <input type="text" id="ops" name="ops" disabled></input>
+            <input type="text" id="ops" name="ops" readonly></input>
         </label>
-        <br> <b>Stats</b>
+        <br> <input id="submitStats" type="submit" class="btn btn-info" value="Submit">
     </form>
 
     <!-- Hint Button -->
