@@ -107,6 +107,10 @@ def login():
 def selectionSort():
   return render_template('selectionSort.html')
 
+@app.route('/selectionSort_assisted')
+def insertionSort():
+  return render_template('assisted_selectionSort.html')
+
 
 @app.route('/logout')
 def logout():
