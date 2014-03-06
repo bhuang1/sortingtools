@@ -72,8 +72,6 @@ function createCardHTML(globals, divElem) {
     var newHTML = [];
     var cardArray = globals.cardArray;
     for (var i = 0; i < globals.NUM_CARDS; i++) {
-  //      newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"></div>');
-  //  }
 		newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"><div class="overlay" style="background-image:url(' + cardArray[i].frontFace + ');"></div></div>');
     }
 
