@@ -38,6 +38,5 @@ $(document).ready(function () {
     popHints();
     hideHints();
 
-    alert("what the faggot fuck");
     $('#submitStats').hide();
 });
