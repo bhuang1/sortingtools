@@ -30,7 +30,7 @@ function legalMove(globals, ui, start) {
  */
 function isSorted(globals, id) {
 	var card = $('#' + id);
-	return (globals.cards[id].flipped || globals.maxCard.value.id == id)
+	return (globals.cards[id].flipped || (globals.maxCard !== undefined && globals.maxCard.value.id == id))
           && ((id == 0 && card.index() == 0) ||
               (!isNaN(parseInt(card.prev().attr('id'))) &&
                globals.cards[id - 1].sorted &&
