@@ -310,8 +310,7 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
 
             // Handle sortedness as a result of the drag / drop
             if (isSorted(globals, cardIndex)) {
-
-			setSorted(globals, cardIndex);
+                setSorted(globals, cardIndex);
                 chainSort(globals, cardIndex);
 
                 if (detectFinish(globals.NUM_CARDS))
@@ -320,3 +319,5 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
         }
     });
 }
+
+

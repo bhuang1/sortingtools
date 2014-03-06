@@ -85,8 +85,7 @@ def add_stat():
         'anonymous' if not session.get('logged_in') else session['username']])
   db.commit()
   flash('Posted results to the database!')
-  return redirect(url_for('show_entries'))
-
+  return redirect(url_for('selectionSort'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

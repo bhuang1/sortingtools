@@ -39,4 +39,5 @@ $(document).ready(function () {
     hideHints();
 
     $('#submitStats').hide();
+    resetCards(globals);
 });

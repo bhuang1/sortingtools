@@ -27,3 +27,24 @@ function showFinish() {
     $('.alert').show();
     $('#submitStats').show();
 }
+
+
+function resetCards(globals) {
+    $('#submitStats').click(function()  {      
+        $('.sort-area').html("");
+        createCards(globals);
+        createCardHTML(globals, '.sort-area');
+        globals.totFlip = 0;
+        globals.ops = 0;
+        globals.mem = 0;
+        handleHover(globals, '.card');
+        handleDoubleClick(globals, '.card', isSorted, chainSort);
+        handleRightClick(globals, isSorted, '.droppable', '.card', chainSort);
+        handleDragDrop(globals, '.sort-area', legalMove, isSorted, chainSort); 
+        popHintsHTML();
+        popHints();
+        hideHints();
+        $('#submitStats').hide();
+    });   
+}
+
