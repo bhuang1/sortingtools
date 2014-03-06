@@ -74,31 +74,15 @@ def show_entries():
   return render_template('show_entries.html', entries=entries)
 
 
-@app.route('/add', methods=['POST'])
-def add_entry():
-  if not session.get('logged_in'):
-    abort(401)
-  db = get_db()
-  db.execute('insert into entries (title, text) values (?, ?)',
-               [request.form['title'], request.form['text']])
-  db.commit()
-  flash('Posted results to the database!')
-  return redirect(url_for('show_entries'))
-
-
 @app.route('/newStat', methods=['POST'])
 def add_stat():
-  print "inside newStat"
-  print request
-  print request.form
-  for i in request.form:
-    print i
-  print request.form['mem']
-  print request.form['ops']
-
+  '''Adds a new statistics entry to the database.'''
+  for s in session:
+    print s
   db = get_db()
-  db.execute('insert into entries (mem, ops) values (?, ?)',
-      [request.form['mem'], request.form['ops']])
+  db.execute('insert into entries (mem, ops, who) values (?, ?, ?)',
+      [request.form['mem'], request.form['ops'],
+        'anonymous' if not session.get('logged_in') else session['username']])
   db.commit()
   flash('Posted results to the database!')
   return redirect(url_for('show_entries'))
@@ -113,6 +97,7 @@ def login():
     elif request.form['password'] != app.config['PASSWORD']:
       error = 'Invalid password'
     else:
+      session['username'] = request.form['username']
       session['logged_in'] = True
       flash('You were logged in')
       return redirect(url_for('show_entries'))
