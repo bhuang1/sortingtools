@@ -25,4 +25,5 @@ function detectFinish(globals) {
  */
 function showFinish() {
     $('.alert').show();
+    $('#submitStats').show();
 }
