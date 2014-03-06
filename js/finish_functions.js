@@ -1,4 +1,4 @@
-/*
+/**
  * Functions for when sorting is complete.
  * @author Betty Huang
  * @author Sucharita Jayanti
@@ -10,7 +10,7 @@
  * @since 0.1
  */
 
-/*
+/**
  * Returns true if it was sorted
  * @param globals - globals object
  */
@@ -20,7 +20,7 @@ function detectFinish(globals) {
         return cards[numCards - 1].sorted;
 }
 
-/*
+/**
  *Show finish message
  */
 function showFinish() {
