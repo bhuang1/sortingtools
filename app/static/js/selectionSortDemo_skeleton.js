@@ -21,5 +21,22 @@ $(document).ready(function () {
     createCards(globals);
     createCardHTML(globals, '.sort-area');
 
-    resetCards(globals);
+    // Create instructions
+    var nums = [];
+    for (var i = 0; i < globals.cardArray.length; i++) {
+        nums.push(globals.cardArray[i].num);
+    }
+    var instructions = autoSort(nums);
+    alert(instructions);
+
+    $('#hintButton').click(function() {
+        if ($(this).text() == 'Restart') {
+            window.location.reload();
+        } else {
+            // Disable until animation finishes
+            $(this).prop('disabled', true);
+            animate_cards(instructions, globals);
+            $(this).prop('disabled', false);
+        }
+    });
 });
