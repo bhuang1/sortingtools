@@ -22,7 +22,8 @@ $(document).ready(function () {
 
     // Create the cards
     createCards(globals);
-    createCardHTML(globals, '.sort-area');
+    createCardHTML(globals, '.card-area');
+	setUpArrows(globals, '.arr-area');
 
     // Hover over a card
     handleHover(globals, '.card');
@@ -34,7 +35,7 @@ $(document).ready(function () {
     handleRightClick(globals, isSorted, '.droppable', '.card', chainSort);
 
     // Handle drag and drop
-    handleDragDrop(globals, '.sort-area', legalMove, isSorted, chainSort);
+    handleDragDrop(globals, '.card-area', legalMove, isSorted, chainSort);
 	
     // handle the popping
     popHintsHTML();

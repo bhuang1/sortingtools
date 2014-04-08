@@ -81,6 +81,17 @@ function createCardHTML(globals, divElem) {
     $(divElem).html(newHTML.join(''));
 }
 
+function setUpArrows(globals, divElem){
+	var newHTML = [];
+	var cardArray = globals.cardArray;
+	for (var i = 0; i < globals.NUM_CARDS; i++) {
+		newHTML.push('<span class="glyphicon glyphicon-arrow-up" id="c' + i + '" style="display:none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
+	}
+	$(divElem).html(newHTML.join(''));
+	$("#c1").show();
+
+}
+
 /**
  * Detects mouse hovering over card object and animates.
  * @param globals   - object containing global variables
@@ -193,6 +204,7 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
 					
 					if (cardIndex == globals.nextCard && chainSort(globals)) {
 						alert("increment bound");
+						moveArrow(globals);
 						globals.rightBound = globals.rightBound+1;
 						globals.nextCard = globals.cardArray[globals.rightBound].num;
 					}
@@ -258,6 +270,7 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
 			
 			if (cardIndex == globals.nextCard && chainSort(globals)) {
 				alert("increment bound");
+				moveArrow(globals);
 				globals.rightBound = globals.rightBound+1;
 				globals.nextCard = globals.cardArray[globals.rightBound].num;
 			}
@@ -271,6 +284,14 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
 			*/
         }
     });
+}
+
+function moveArrow(globals){
+	var bound = globals.rightBound;
+	alert(bound);
+	$("#c"+ bound).hide();
+	if (bound + 1 < globals.NUM_CARDS)
+		$("#c" + parseInt(bound+1)).show()
 }
 
 /**
@@ -334,6 +355,7 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
 				// still working as we expected for swapping.
 				if (chainSort(globals)) {
 					alert("increment bound");
+					moveArrow(globals);
 					globals.rightBound = globals.rightBound+1;
 					globals.nextCard = globals.cardArray[globals.rightBound].num;
 				}

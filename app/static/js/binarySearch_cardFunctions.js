@@ -20,8 +20,8 @@ function createCards(globals){
     var BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_blue.svg';
     var SORTED_BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_red.svg';
     var FOREGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Ornamental_deck_';
-    var cardNumbers = ['Ace', 'King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
-    var values = [14,13,12,11,10,9,8,7,6,5,4,3,2];
+    var cardNumbers = ['King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
+    var values = [13,12,11,10,9,8,7,6,5,4,3,2];
 	var cardSuits = ['spades', 'clubs', 'diamonds', 'hearts'];
 	
     // Randomized array of cards
@@ -88,7 +88,6 @@ function setUpArrows(globals, divElem){
 		newHTML.push('<span class="glyphicon glyphicon-arrow-left" id="l' + (i + globals.NUM_CARDS) + '" style="display: none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
 	}
 	$(divElem).html(newHTML.join(''));
-
 }
 
 
