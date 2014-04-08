@@ -74,8 +74,8 @@ def show_entries():
   return render_template('show_entries.html', entries=entries)
 
 
-@app.route('/newStat', methods=['POST'])
-def add_stat():
+@app.route('/newStat/<path:older_path>', methods=['POST'])
+def add_stat(older_path):
   '''Adds a new statistics entry to the database.'''
   for s in session:
     print s
@@ -84,9 +84,11 @@ def add_stat():
       [request.form['mem'], request.form['ops'],
         'anonymous' if not session.get('logged_in') else session['username']])
   db.commit()
+  	
   flash('Posted results to the database!')
-  return redirect(url_for('selectionSort'))
-
+  print older_path
+  return redirect(url_for(older_path))
+  
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   error = None
@@ -117,7 +119,10 @@ def insertionSort():
 def selectionSortDemo():
   return render_template('selectionSortDemo.html')
 
-
+@app.route('/binarySearch')
+def binarySearch():
+	return render_template('binarySearch.html')
+	
 @app.route('/logout')
 def logout():
   session.pop('logged_in', None)

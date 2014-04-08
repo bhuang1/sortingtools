@@ -1,9 +1,15 @@
 .sort-area {
     height: 25%;
     width: 100%;
- 
-
+	position: relatife;
 }
+
+.arr-area{
+	width:100%;
+	position: absolute;
+	top: 280px;
+}
+
 .card {
     margin-top: 120px;
     background-size: cover;
