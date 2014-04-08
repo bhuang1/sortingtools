@@ -1,7 +1,7 @@
-<!DOCTYPE html>	
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Binary Search</title>
+    <title>Sorting Tool</title>
 
     <!-- Javascript -->
     <!-- JQuery -->
@@ -11,21 +11,22 @@
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" >
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
+
     <!-- Our Code -->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/binarySearch_cardFunctions.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/binarySearch_finishFunctions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/insertionCard_functions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/finish_functions.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/maxCard_functions.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/popover_functions.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/selectionSort_functions.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/insertionSort_functions.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/stats_functions.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/binarySearch_skeleton.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/insertionSort_skeleton.js') }}"></script>
+    
 
     <!-- CSS -->
     <!-- Our CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body oncontextmenu="return false;">
@@ -84,18 +85,16 @@
    <!-- Congratulations Alert -->
     <div class="alert" style="display: none"> 
         <a class="close" data-hide="alert">x</a>  
-        <strong>Congratulations!</strong> You have found the card.</div>
+        <strong>Congratulations!</strong> Everything is sorted correctly.</div>
     
     <!-- Sorting Area -->
-    <div class="sort-area">
-		<div class="card-area"></div>
-		<div class="arr-area"></div>
-	</div>
-	
+    <div class="sort-area"></div>
+    <br>
     <br>
     <div class="droppable" id="drop-id"></div>
-    <div class="min-text">Find this!</div>
-	    <!-- Stats -->
+    <div class="min-text">Maximum</div>
+
+    <!-- Stats -->
     <form id="stats" action="{{ url_for('add_stat', older_path = request.path.split('/')[1 ])}}" method=post>
         <label style="font-weight:normal;">Memory:
             <input type="text" id="mem" name="mem" readonly></input>
@@ -106,13 +105,11 @@
         </label>
         <br> <input id="submitStats" type="submit" class="btn btn-info" value="Submit">
     </form>
- 
-
 
     <!-- Hint Button -->
     <!-- linked to the div below by a few lines of javascript at the very beginning of our code -->
     <!-- messy code due to syntax highlighting -->
-    <button id="hintButton" type="button" class="btn btn-info" rel="popover" data-placement="top" data-title="Binary Search">Hints</button>
+    <button id="hintButton" type="button" class="btn btn-info" rel="popover" data-placement="top" data-title="Selection Sort">Hints</button>
     <div id="popover_content_wrapper" style="display: none"> <pre style='color:#000020;background:#f6f8ff;'><body style='color:#000020; background:#f6f8ff; '><pre>
 <span style='color:#200080; font-weight:bold; '>function</span> insertionSort<span style='color:#308080; '>(</span>items<span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
 

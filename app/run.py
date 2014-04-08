@@ -86,7 +86,7 @@ def add_stat(older_path):
   db.commit()
   	
   flash('Posted results to the database!')
-  print older_path
+
   return redirect(url_for(older_path))
   
 @app.route('/login', methods=['GET', 'POST'])
@@ -111,7 +111,7 @@ def selectionSort():
 
 
 @app.route('/selectionSort_assisted')
-def insertionSort():
+def selectionSortAssisted():
   return render_template('assisted_selectionSort.html')
 
 
@@ -119,6 +119,10 @@ def insertionSort():
 def selectionSortDemo():
   return render_template('selectionSortDemo.html')
 
+@app.route('/insertionSort')
+def insertionSort():
+  return render_template('insertionSort.html')
+		
 @app.route('/binarySearch')
 def binarySearch():
 	return render_template('binarySearch.html')

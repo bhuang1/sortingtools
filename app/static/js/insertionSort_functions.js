@@ -11,26 +11,19 @@
  */
  
 /*
- * Check if a move is legal in manual mode.
+ * Check if a move is legal in insertion sort.
  * @param globals - object containing global variables
  * @param ui      - JQuery ui element
  * @return Whether the attempted position is legal
  */
-function legalMove(globals, ui, start) {
+function legalMove(globals, ui, start, end) {
     var cardNum = parseInt($(ui.item).attr('id'));
-    return (!globals.cards[cardNum].sorted &&
-        !globals.cards[parseInt($(ui.item).next().attr('id'))].sorted &&
-		!($(ui.item).index() == start));
-}
-
-/*
- * Check if a move is legal in assisted mode.
- * @param globals - object containing globals
- * @param ui      - JQuery ui element
- * @return Whether the attempted position is legal
- */
-function assistedLegalMove(globals, ui, start) {
-    return false;
+	//alert(globals.rightBound);
+	//alert($(ui.item).index());
+	//alert(!($(ui.item).index() == start));
+	//alert(($(ui.item).index() >= globals.leftBound));
+	//alert(($(ui.item).index() <= globals.rightBound));
+    return (cardNum == globals.nextCard && !(end == start) && end >= globals.leftBound && start >= globals.leftBound && end <= globals.rightBound && start <= globals.rightBound);
 }
 
 /*
@@ -39,6 +32,15 @@ function assistedLegalMove(globals, ui, start) {
  * @param id      - id of the div element to check
  */
 function isSorted(globals, id) {
+//	return globals.cards[id].sorted || (globals.cards[id].flipped && ((id == 0 && card.index() == 0)
+//        || (card.index() == id && isSorted(globals, id - 1))));
+		// alert(globals.cards[id - 1].sorted);
+	//return ((globals.cards[id].flipped || globals.maxCard.value.id == id) && ((id == 0 && card.index() == 0)
+	//		|| (!isNaN(parseInt(card.prev().attr('id'))) && globals.cards[id - 1].sorted && parseInt(card.prev().attr('id')) === id-1)));
+
+    var card = $('#' + id);
+    return globals.cards[id].sorted || ((globals.cards[id].flipped || globals.maxCard.value.id == id) && ((id == 0 && card.index() == 0) || (card.index() == id && isSorted(globals, id - 1))));
+
 }
 
 /*
@@ -47,23 +49,15 @@ function isSorted(globals, id) {
  * @param globals   - object containing global variables
  * @param cardIndex - index of the card at which chainSort starts
  */
-function chainSort(globals, cardIndex) {
+ 
+function chainSort(globals) {
+    //var cards = globals.cards;
     // Propagates card flips
-    while (true) {
-        ++cardIndex;
-        if ($('#' + cardIndex).index() == cardIndex &&
-            globals.cards[cardIndex].flipped &&
-            $('#' + (cardIndex-1)).index() == cardIndex-1) {
-
-            globals.cards[cardIndex].sorted = true;
-            $('#' + cardIndex).css({
-                backgroundImage:'url('+globals.cards[cardIndex].sortedBack+')'
-            });
-        } else {
-            if (detectFinish(globals)) {
-                showFinish();
-            }
-            break;
-        }
+	var sortedCount = 0;
+	var currentCard = globals.leftBound;
+    while (globals.cardArray[currentCard].num < globals.cardArray[currentCard+1].num) {
+        sortedCount++;
+		currentCard++;
     }
+	return sortedCount >= (globals.rightBound-globals.leftBound);
 }

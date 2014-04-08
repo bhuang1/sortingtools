@@ -49,10 +49,11 @@
                     <li class="active"><a href="#">Manual</a></li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Algorithm<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Selection Sort</a></li>
-                            <li><a href="#">Insertion Sort</a></li>
+							<li><a href="selectionSort">Selection Sort</a></li>
+                            <li><a href="insertionSort">Insertion Sort</a></li>
                             <li><a href="#">Merge Sort</a></li></li>
                             <li><a href="#">Heap Sort</a></li>
+							<li><a href="binarySearch">Binary Search</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Challenges<b class="caret"></b></a>
@@ -92,10 +93,9 @@
     <br>
     <div class="droppable" id="drop-id"></div>
     <div class="min-text">Maximum</div>
-
     <!-- Stats -->
-    <form id="stats" action="{{ url_for('add_stat, older_path = request.path.split('/')[1 ]) }}" method=post>
-        <label style="font-weight:normal;">Memory:
+    <form id="stats" action="{{ url_for('add_stat', older_path = request.path.split('/')[1 ]) }}" method=post>
+		<label style="font-weight:normal;">Memory:
             <input type="text" id="mem" name="mem" readonly></input>
         </label>
         <br>
