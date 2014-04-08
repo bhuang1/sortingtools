@@ -27,7 +27,6 @@ $(document).ready(function () {
         nums.push(globals.cardArray[i].num);
     }
     var instructions = autoSort(nums);
-    alert(instructions);
 
     $('#hintButton').click(function() {
         if ($(this).text() == 'Restart') {

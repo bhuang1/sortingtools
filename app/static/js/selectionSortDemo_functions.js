@@ -58,9 +58,29 @@ function autoSort(cards) {
  * @param theQueue       - the queue to which animations are added
  * @param selector       - the jQuery selector
  * @param animationProps - what animation to perform
+ * @param flip           - boolean if a card is being flipped
+ * @param reveal         - boolean if a card is being revealed
+ * @param min            - boolean if a card is set as a minimum
+ * @param globals        - the global objects
+ * @param params         - the parameters for animation
  */
-function animToQueue(theQueue, selector, animationprops) {
+function animToQueue(theQueue, selector, animationprops, css, globals, params) {
     theQueue.queue(function(next) {
+        // CSS changes
+        if (css === "reveal") {
+            $(selector).css({
+                backgroundImage: 'url(' + globals.cardArray[params].frontFace + ')'
+            });
+        } else if (css === "flip") {
+            $(selector).css({
+                backgroundImage: 'url(' + globals.cardArray[params].normalBack + ')'
+            });
+        } else if (css === "min") {
+            $('.droppable').css('background-image',
+                'url(' + globals.cardArray[params].frontFace + ')');
+        }
+
+        // Animation
         $(selector).animate(animationprops, next);
     });
 }
@@ -78,9 +98,7 @@ function animate_cards(instructions, globals) {
         var inst = instructions[i].split(':')[0];
         var params = instructions[i].split(':')[1];
         var fn = window[inst];
-        if (typeof fn === 'function' && fn != undefined) {
-            console.log('index: ' + i + ' for real instructions: ' + instructions[i]);
-            console.log('index: ' + i + ' for real fn: ' + fn);
+        if (typeof fn === 'function') {
             fn(globals, params, q);
         } else {
             console.log('Error- ' + inst + ' not a function');
@@ -99,7 +117,8 @@ function animate_cards(instructions, globals) {
  * @param q       - the queue of animations
  */
 function consider(globals, params, q) {
-    animToQueue(q, '#' + params, {top:'-=' + globals.SELECT_MOVE});
+    animToQueue(q, '#' + globals.cardArray[params].num,
+            {top:'-=' + globals.SELECT_MOVE}, "reveal", globals, params);
 }
 
 
@@ -110,7 +129,8 @@ function consider(globals, params, q) {
  * @param q       - the queue of animations
  */
 function unconsider(globals, params, q) {
-    animToQueue(q, '#' + params, {top:'0px'});
+    animToQueue(q, '#' + globals.cardArray[params].num,
+            {top:'0px'}, "flip", globals, params);
 }
 
 /**
@@ -119,5 +139,7 @@ function unconsider(globals, params, q) {
  * @param params  - the parameters of the string command
  * @param q       - the queue of animations
  */
-function markMin(global, params, q) {
+function markMin(globals, params, q) {
+    animToQueue(q, '#' + globals.cardArray[params].num,
+            {top:globals.SELECT_MOVE}, "min", globals, params);
 }

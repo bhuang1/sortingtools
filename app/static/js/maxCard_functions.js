@@ -35,7 +35,6 @@
  
  /** Set the background for maxCard */
 function setMaxCardValue(maxClass, cardNum, globals) {
-	$(maxClass).css('background-image',
-			'url(' + globals.cards[cardNum].frontFace+ ')');
-	$(maxClass).text('');
+    $(maxClass).css('background-image',
+		    'url(' + globals.cards[cardNum].frontFace+ ')');
 }

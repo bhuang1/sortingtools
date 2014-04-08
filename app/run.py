@@ -87,6 +87,7 @@ def add_stat():
   flash('Posted results to the database!')
   return redirect(url_for('selectionSort'))
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   error = None
