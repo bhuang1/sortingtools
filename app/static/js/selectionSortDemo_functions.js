@@ -41,7 +41,7 @@ function autoSort(cards) {
 
         // Move min to correct place
         steps.push('move:'+minIndex+';to;'+toInsert);
-        steps.push('markSorted:'+minIndex);
+        steps.push('markSorted:'+toInsert);
         cards.remove(cards[minIndex]);
         cards.splice(toInsert, 0, currentMin);
         cards.join();
@@ -66,22 +66,43 @@ function autoSort(cards) {
  */
 function animToQueue(theQueue, selector, animationprops, css, globals, params) {
     theQueue.queue(function(next) {
-        // CSS changes
+        // CSS changes before animation
+
+        // Reveal a card
         if (css === "reveal") {
             $(selector).css({
                 backgroundImage: 'url(' + globals.cardArray[params].frontFace + ')'
             });
+        // Flip it back over
         } else if (css === "flip") {
             $(selector).css({
                 backgroundImage: 'url(' + globals.cardArray[params].normalBack + ')'
             });
+        // Mark card as new min / max
         } else if (css === "min") {
             $('.droppable').css('background-image',
                 'url(' + globals.cardArray[params].frontFace + ')');
+        // Set card as sorted
+        } else if (css == "sort") {
+            spacifyCards(globals);
+            $(selector).css({
+                backgroundImage:'url(' + globals.cardArray[params].sortedBack + ')'
+            });
+        } else if (css == "move") {
+            var to = params.split(';')[2];
+            var from = params.split(';')[0];
+            $(selector).insertBefore($('#' + globals.cardArray[to].num));
+            $(selector).css({'z-index': $(selector).index()});
+            // Update globals.cardArray
+            var temp = globals.cardArray[from];
+            globals.cardArray.remove(temp);
+            globals.cardArray.splice(to, 0, temp);
+            globals.cardArray.join();
         }
 
         // Animation
         $(selector).animate(animationprops, next);
+
     });
 }
 
@@ -133,6 +154,7 @@ function unconsider(globals, params, q) {
             {top:'0px'}, "flip", globals, params);
 }
 
+
 /**
  * Mark a card as the new minimum.
  * @param globals - the globals
@@ -142,4 +164,31 @@ function unconsider(globals, params, q) {
 function markMin(globals, params, q) {
     animToQueue(q, '#' + globals.cardArray[params].num,
             {top:globals.SELECT_MOVE}, "min", globals, params);
+}
+
+
+/**
+ * Mark a card as sorted.
+ * @param globals - the globals
+ * @param params  - the parameter of the string command
+ * @param q       - the queue of animations
+ */
+function markSorted(globals, params, q) {
+    animToQueue(q, '#' + globals.cards[params].num,
+            {top:'0px'}, "sort", globals, params);
+}
+
+
+/**
+ * Moves a card.
+ * @param globals - the globals
+ * @param params  - the parameter of the string command
+ * @param q       - the queue of animations
+ */
+function move(globals, params, q) {
+    var from = params.split(';')[0];
+    var to = params.split(';')[2];
+    animToQueue(q, '#' + globals.cardArray[from].num,
+            {'left':globals.SPACE * to + globals.PADDING},
+            "move", globals, params);
 }
