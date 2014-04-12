@@ -1,16 +1,12 @@
 /**
- * Removes an element from an array.
+ * Moves elements inside an array from one location to another.
+ * @param from - source location
+ * @param to   - destination
  */
-Array.prototype.remove= function() {
-    var what, a= arguments, L= a.length, ax;
-    while(L && this.length){
-        what= a[--L];
-        while((ax= this.indexOf(what))!= -1){
-            this.splice(ax, 1);
-        }
-    }
-    return this;
-}
+Array.prototype.move = function(from, to) {
+    this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
 
 /*
  * Automatically performs selection sort.
@@ -42,9 +38,7 @@ function autoSort(cards) {
         // Move min to correct place
         steps.push('move:'+minIndex+';to;'+toInsert);
         steps.push('markSorted:'+toInsert);
-        cards.remove(cards[minIndex]);
-        cards.splice(toInsert, 0, currentMin);
-        cards.join();
+        cards.move(minIndex, toInsert);
         toInsert++;
         currentMin = Number.MAX_VALUE;
         minIndex = Number.MAX_VALUE;
@@ -57,25 +51,25 @@ function autoSort(cards) {
  * Adds animations to a queue.
  * @param theQueue       - the queue to which animations are added
  * @param selector       - the jQuery selector
- * @param animationProps - what animation to perform
- * @param flip           - boolean if a card is being flipped
- * @param reveal         - boolean if a card is being revealed
- * @param min            - boolean if a card is set as a minimum
+ * @param props          - what animation to perform
+ * @param css            - which CSS change to perform between animations
  * @param globals        - the global objects
  * @param params         - the parameters for animation
  */
-function animToQueue(theQueue, selector, animationprops, css, globals, params) {
+function animToQueue(theQueue, selector, props, css, globals, params) {
     theQueue.queue(function(next) {
         // CSS changes before animation
 
         // Reveal a card
         if (css === "reveal") {
-            $(selector).css({
+            var select = '#' + globals.cardArray[params].num;  // race condition
+            $(select).css({
                 backgroundImage: 'url(' + globals.cardArray[params].frontFace + ')'
             });
         // Flip it back over
         } else if (css === "flip") {
-            $(selector).css({
+            var select = '#' + globals.cardArray[params].num;  // race condition
+            $(select).css({
                 backgroundImage: 'url(' + globals.cardArray[params].normalBack + ')'
             });
         // Mark card as new min / max
@@ -91,18 +85,17 @@ function animToQueue(theQueue, selector, animationprops, css, globals, params) {
         } else if (css == "move") {
             var to = params.split(';')[2];
             var from = params.split(';')[0];
-            $(selector).insertBefore($('#' + globals.cardArray[to].num));
-            $(selector).css({'z-index': $(selector).index()});
+            var select = '#' + globals.cardArray[from].num;
+            $(select).insertBefore($('#' + globals.cardArray[to].num));
             // Update globals.cardArray
-            var temp = globals.cardArray[from];
-            globals.cardArray.remove(temp);
-            globals.cardArray.splice(to, 0, temp);
-            globals.cardArray.join();
+            globals.cardArray.move(from, to);
         }
 
         // Animation
-        $(selector).animate(animationprops, next);
-
+        if (css == "reveal" || css == "flip" || css == "move")
+            $(select).animate(props, next);
+        else
+            $(selector).animate(props, next);
     });
 }
 
