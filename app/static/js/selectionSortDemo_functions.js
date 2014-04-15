@@ -1,16 +1,12 @@
 /**
- * Removes an element from an array.
+ * Moves elements inside an array from one location to another.
+ * @param from - source location
+ * @param to   - destination
  */
-Array.prototype.remove= function() {
-    var what, a= arguments, L= a.length, ax;
-    while(L && this.length){
-        what= a[--L];
-        while((ax= this.indexOf(what))!= -1){
-            this.splice(ax, 1);
-        }
-    }
-    return this;
-}
+Array.prototype.move = function(from, to) {
+    this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
 
 /*
  * Automatically performs selection sort.
@@ -41,10 +37,8 @@ function autoSort(cards) {
 
         // Move min to correct place
         steps.push('move:'+minIndex+';to;'+toInsert);
-        steps.push('markSorted:'+minIndex);
-        cards.remove(cards[minIndex]);
-        cards.splice(toInsert, 0, currentMin);
-        cards.join();
+        steps.push('markSorted:'+toInsert);
+        cards.move(minIndex, toInsert);
         toInsert++;
         currentMin = Number.MAX_VALUE;
         minIndex = Number.MAX_VALUE;
@@ -57,11 +51,52 @@ function autoSort(cards) {
  * Adds animations to a queue.
  * @param theQueue       - the queue to which animations are added
  * @param selector       - the jQuery selector
- * @param animationProps - what animation to perform
+ * @param props          - what animation to perform
+ * @param css            - which CSS change to perform between animations
+ * @param globals        - the global objects
+ * @param params         - the parameters for animation
  */
-function animToQueue(theQueue, selector, animationprops) {
+function animToQueue(theQueue, selector, props, css, globals, params) {
     theQueue.queue(function(next) {
-        $(selector).animate(animationprops, next);
+        // CSS changes before animation
+
+        // Reveal a card
+        if (css === "reveal") {
+            var select = '#' + globals.cardArray[params].num;  // race condition
+            $(select).css({
+                backgroundImage: 'url(' + globals.cardArray[params].frontFace + ')'
+            });
+        // Flip it back over
+        } else if (css === "flip") {
+            var select = '#' + globals.cardArray[params].num;  // race condition
+            $(select).css({
+                backgroundImage: 'url(' + globals.cardArray[params].normalBack + ')'
+            });
+        // Mark card as new min / max
+        } else if (css === "min") {
+            var select = '#' + globals.cardArray[params].num;
+            $('.droppable').css('background-image',
+                'url(' + globals.cardArray[params].frontFace + ')');
+        // Set card as sorted
+        } else if (css == "sort") {
+            var select = '#' + globals.cards[params].num;
+            spacifyCards(globals);
+            $(selector).css({
+                backgroundImage:'url(' + globals.cards[params].sortedBack + ')'
+            });
+        } else if (css == "move") {
+            var to = params.split(';')[2];
+            var from = params.split(';')[0];
+            var select = '#' + globals.cardArray[from].num;
+            $(select).insertBefore($('#' + globals.cardArray[to].num));
+            // Update globals.cardArray
+            globals.cardArray.move(from, to);
+        } else if (css == "unmin") {
+            var select = '#' + globals.cardArray[params].num;
+        }
+
+        // Animation
+        $(select).animate(props, next);
     });
 }
 
@@ -78,9 +113,7 @@ function animate_cards(instructions, globals) {
         var inst = instructions[i].split(':')[0];
         var params = instructions[i].split(':')[1];
         var fn = window[inst];
-        if (typeof fn === 'function' && fn != undefined) {
-            console.log('index: ' + i + ' for real instructions: ' + instructions[i]);
-            console.log('index: ' + i + ' for real fn: ' + fn);
+        if (typeof fn === 'function') {
             fn(globals, params, q);
         } else {
             console.log('Error- ' + inst + ' not a function');
@@ -99,7 +132,8 @@ function animate_cards(instructions, globals) {
  * @param q       - the queue of animations
  */
 function consider(globals, params, q) {
-    animToQueue(q, '#' + params, {top:'-=' + globals.SELECT_MOVE});
+    animToQueue(q, '#' + globals.cardArray[params].num,
+            {top:'-=' + globals.SELECT_MOVE}, "reveal", globals, params);
 }
 
 
@@ -110,8 +144,10 @@ function consider(globals, params, q) {
  * @param q       - the queue of animations
  */
 function unconsider(globals, params, q) {
-    animToQueue(q, '#' + params, {top:'0px'});
+    animToQueue(q, '#' + globals.cardArray[params].num,
+            {top:'0px'}, "flip", globals, params);
 }
+
 
 /**
  * Mark a card as the new minimum.
@@ -119,5 +155,46 @@ function unconsider(globals, params, q) {
  * @param params  - the parameters of the string command
  * @param q       - the queue of animations
  */
-function markMin(global, params, q) {
+function markMin(globals, params, q) {
+    animToQueue(q, '#' + globals.cardArray[params].num,
+            {top:globals.SELECT_MOVE}, "min", globals, params);
+}
+
+
+/**
+ * Unmark a card as the minimum.
+ * @param globals - the globals
+ * @param params  - the parameters of the string command
+ * @param q       - the queue of animations
+ */
+function unmarkMin(globals, params, q) {
+    animToQueue(q, '#' + globals.cardArray[params].num,
+            {top:'0px'}, "unmin", globals, params);
+}
+
+
+/**
+ * Mark a card as sorted.
+ * @param globals - the globals
+ * @param params  - the parameter of the string command
+ * @param q       - the queue of animations
+ */
+function markSorted(globals, params, q) {
+    animToQueue(q, '#' + globals.cards[params].num,
+            {top:'0px'}, "sort", globals, params);
+}
+
+
+/**
+ * Moves a card.
+ * @param globals - the globals
+ * @param params  - the parameter of the string command
+ * @param q       - the queue of animations
+ */
+function move(globals, params, q) {
+    var from = params.split(';')[0];
+    var to = params.split(';')[2];
+    animToQueue(q, '#' + globals.cardArray[from].num,
+            {'left':globals.SPACE * to + globals.PADDING},
+            "move", globals, params);
 }

@@ -86,9 +86,9 @@ def add_stat(older_path):
   db.commit()
   	
   flash('Posted results to the database!')
-
   return redirect(url_for(older_path))
-  
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   error = None
