@@ -123,6 +123,9 @@ def selectionSortDemo():
 def insertionSort():
   return render_template('insertionSort.html')
 		
+@app.route('/heapSort')
+def heapSort():
+	return render_template('heapSort.html')
 @app.route('/binarySearch')
 def binarySearch():
 	return render_template('binarySearch.html')

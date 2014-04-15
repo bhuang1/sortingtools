@@ -125,6 +125,94 @@ footer {
     border-radius: 15px;
 }
 
+#heap {
+	position:fixed;
+    top:290px;
+	left: 25%;
+}
+
+#node0 {
+	position: absolute;
+	top: 1%;
+	left: 52%;
+}
+
+#node1 {
+	position: absolute;
+	top: 28%;
+	left: 25%;
+}
+
+#node2 {
+	position: absolute;
+	top: 28%;
+	left: 79%;
+}
+
+#node3 {
+	position: absolute;
+	top: 55%;
+	left: 11%;
+}
+
+#node4 {
+	position: absolute;
+	top: 55%;
+	left: 38%;
+}
+
+#node5 {
+	position: absolute;
+	top: 55%;
+	left: 66%;
+}
+
+#node6 {
+	position: absolute;
+	top: 55%;
+	left: 93%;
+}
+
+#node7 {
+	position: absolute;
+	top: 83%;
+	left: 4%;
+}
+
+#node8 {
+	position: absolute;
+	top: 83%;
+	left: 18%;
+}
+
+#node9 {
+	position: absolute;
+	top: 83%;
+	left: 31%;
+}
+
+#node10 {
+	position: absolute;
+	top: 83%;
+	left: 45%;
+}
+
+#node11 {
+	position: absolute;
+	top: 83%;
+	left: 59%;
+}
+
+#node12 {
+	position: absolute;
+	top: 83%;
+	left: 72%;
+}
+
+.circle {
+	background-image:url("../images/circle.png");
+}
+
 .alert {
   color:white;
   background-color: #57a957;
