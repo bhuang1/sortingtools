@@ -74,13 +74,15 @@ function animToQueue(theQueue, selector, props, css, globals, params) {
             });
         // Mark card as new min / max
         } else if (css === "min") {
+            var select = '#' + globals.cardArray[params].num;
             $('.droppable').css('background-image',
                 'url(' + globals.cardArray[params].frontFace + ')');
         // Set card as sorted
         } else if (css == "sort") {
+            var select = '#' + globals.cards[params].num;
             spacifyCards(globals);
             $(selector).css({
-                backgroundImage:'url(' + globals.cardArray[params].sortedBack + ')'
+                backgroundImage:'url(' + globals.cards[params].sortedBack + ')'
             });
         } else if (css == "move") {
             var to = params.split(';')[2];
@@ -89,13 +91,12 @@ function animToQueue(theQueue, selector, props, css, globals, params) {
             $(select).insertBefore($('#' + globals.cardArray[to].num));
             // Update globals.cardArray
             globals.cardArray.move(from, to);
+        } else if (css == "unmin") {
+            var select = '#' + globals.cardArray[params].num;
         }
 
         // Animation
-        if (css == "reveal" || css == "flip" || css == "move")
-            $(select).animate(props, next);
-        else
-            $(selector).animate(props, next);
+        $(select).animate(props, next);
     });
 }
 
@@ -157,6 +158,18 @@ function unconsider(globals, params, q) {
 function markMin(globals, params, q) {
     animToQueue(q, '#' + globals.cardArray[params].num,
             {top:globals.SELECT_MOVE}, "min", globals, params);
+}
+
+
+/**
+ * Unmark a card as the minimum.
+ * @param globals - the globals
+ * @param params  - the parameters of the string command
+ * @param q       - the queue of animations
+ */
+function unmarkMin(globals, params, q) {
+    animToQueue(q, '#' + globals.cardArray[params].num,
+            {top:'0px'}, "unmin", globals, params);
 }
 
 
