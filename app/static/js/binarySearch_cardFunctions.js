@@ -10,58 +10,57 @@
  * @since 0.1
  */
 
+
 /**
  * Create array of card objects and mapping from id to card object
  * Randomize the array for initial configuration
  * @param globals - the globals object
  */
-
-function createCards(globals){
+function createCards(globals) {
     var BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_blue.svg';
     var SORTED_BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_red.svg';
     var FOREGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Ornamental_deck_';
     var cardNumbers = ['King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
     var values = [13,12,11,10,9,8,7,6,5,4,3,2];
-	var cardSuits = ['spades', 'clubs', 'diamonds', 'hearts'];
-	
+    var cardSuits = ['spades', 'clubs', 'diamonds', 'hearts'];
+
     // Randomized array of cards
     var cardArray = [];
     // Maps card number to actual card struct
     var cards = {};
 
     // Populate cards and cardArray with card objects
-	var randomVal;
-	var i = 0;
+    var randomVal;
+    var i = 0;
     while (i < globals.NUM_CARDS) {
-		randomVal = (Math.floor(Math.random() * 10) %2) + 1;
-		for (var j = 0; j < randomVal && i+j < globals.NUM_CARDS; j++){
-			var newCard = {};
-			newCard.num = i+j;
-			newCard.flipped = false;
-			newCard.sorted = false;
-			newCard.value = values[i];
-			newCard.normalBack = BACKGROUND;
-			newCard.sortedBack = SORTED_BACKGROUND;
-			newCard.frontFace = FOREGROUND + cardNumbers[i] + '_of_' + cardSuits[(i+j)%4] + '.svg';
-			cardArray.push(newCard);
-			cards[i+j] = newCard;
-		}
-		i = i + randomVal;
+        randomVal = (Math.floor(Math.random() * 10) %2) + 1;
+        for (var j = 0; j < randomVal && i+j < globals.NUM_CARDS; j++){
+            var newCard = {};
+            newCard.num = i+j;
+            newCard.flipped = false;
+            newCard.sorted = false;
+            newCard.value = values[i];
+            newCard.normalBack = BACKGROUND;
+            newCard.sortedBack = SORTED_BACKGROUND;
+            newCard.frontFace = FOREGROUND + cardNumbers[i] + '_of_' + cardSuits[(i+j)%4] + '.svg';
+            cardArray.push(newCard);
+            cards[i+j] = newCard;
+        }
+        i = i + randomVal;
     }
 	
-	// Set zIndex and xPos values based on randomized positions
-	for (i = 0; i < globals.NUM_CARDS; i++) {
-		var num = cardArray[i].num;
-		cards[num].zIndex = i;
-		cards[num].xPos = globals.PADDING + globals.SPACE * i;
-	}
-	
-	
+    // Set zIndex and xPos values based on randomized positions
+    for (i = 0; i < globals.NUM_CARDS; i++) {
+        var num = cardArray[i].num;
+        cards[num].zIndex = i;
+        cards[num].xPos = globals.PADDING + globals.SPACE * i;
+    }
+
     globals.cardArray = cardArray;
     globals.cards = cards;
-	var targetIndex = Math.ceil(Math.random() * 10) % globals.NUM_CARDS;
-	globals.targetValue = cards[targetIndex].value;
-	setMaxCardValue('.droppable', targetIndex, globals);
+    var targetIndex = Math.ceil(Math.random() * 10) % globals.NUM_CARDS;
+    globals.targetValue = cards[targetIndex].value;
+    setMaxCardValue('.droppable', targetIndex, globals);
 }
 
 
@@ -74,20 +73,26 @@ function createCardHTML(globals, divElem) {
     var newHTML = [];
     var cardArray = globals.cardArray;
     for (var i = 0; i < globals.NUM_CARDS; i++) {
-		newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"><div class="overlay" style="background-image:url(' + cardArray[i].frontFace + ');"></div></div>');
+        newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"><div class="overlay" style="background-image:url(' + cardArray[i].frontFace + ');"></div></div>');
     }
 
     $(divElem).html(newHTML.join(''));
 }
 
+
+/**
+ * Creates the hidden arrow divs.
+ * @param globals - the globals object
+ * @param divElem - 
+ */
 function setUpArrows(globals, divElem){
-	var newHTML = [];
-	var cardArray = globals.cardArray;
-	for (var i = 0; i < globals.NUM_CARDS; i++) {
-		newHTML.push('<span class="glyphicon glyphicon-arrow-right" id="r' + i + '" style="display: none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
-		newHTML.push('<span class="glyphicon glyphicon-arrow-left" id="l' + (i + globals.NUM_CARDS) + '" style="display: none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
-	}
-	$(divElem).html(newHTML.join(''));
+    var newHTML = [];
+    var cardArray = globals.cardArray;
+    for (var i = 0; i < globals.NUM_CARDS; i++) {
+        newHTML.push('<span class="glyphicon glyphicon-arrow-right" id="r' + i + '" style="display: none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
+        newHTML.push('<span class="glyphicon glyphicon-arrow-left" id="l' + (i + globals.NUM_CARDS) + '" style="display: none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
+    }
+    $(divElem).html(newHTML.join(''));
 }
 
 
@@ -111,10 +116,11 @@ function handleHover(globals, cardClass) {
     });
 }
 
+
 /**
  * Flips over a card if it was revealed.
  * @param globals - the object containing global variables
- * @param id    - the id of the div element to be flipped over
+ * @param id      - the id of the div element to be flipped over
  */
 function flipOver(globals, id) {
     var cards = globals.cards;
@@ -129,6 +135,7 @@ function flipOver(globals, id) {
     cards[id].flipped = false;
 }
 
+
 /**
  * Reveals the face of the card if fewer than MAX_FLIP cards are face-up
  * @param globals - object containing global variables
@@ -137,7 +144,7 @@ function flipOver(globals, id) {
 function reveal(globals, id) {
     if (globals.totFlip < globals.MAX_FLIP) {
         globals.cards[id].flipped = true;
-		globals.totFlip++;
+        globals.totFlip++;
         maxMem(globals);
         setNewMem(globals);
         $('#' + id).css({
@@ -146,21 +153,34 @@ function reveal(globals, id) {
     }
 }
 
+
+/**
+ * Is the given card the target.
+ * @param globals   - the global object
+ * @param cardIndex - the card in question
+ */
 function isTarget(globals, cardIndex){
-	var cardValue = globals.cards[cardIndex].value
-	return globals.targetValue == cardValue;
+    var cardValue = globals.cards[cardIndex].value
+    return globals.targetValue == cardValue;
 }
 
-function showArrow(globals, cardIndex){
-	var cardValue = globals.cards[cardIndex].value
 
-	if (globals.targetValue < cardValue){
-		$("#r"+ cardIndex).show();
-	}
-	else{
-		$("#l"+ (parseInt(cardIndex) + globals.NUM_CARDS)).show(); 
-	}
+/**
+ * Display the hidden div arrow.
+ * @param globals   - the global object
+ * @param cardIndex - which card the arrow corresponds to
+ */
+function showArrow(globals, cardIndex) {
+    var cardValue = globals.cards[cardIndex].value
+
+    if (globals.targetValue < cardValue){
+        $("#r"+ cardIndex).show();
+    } else{
+        $("#l"+ (parseInt(cardIndex) + globals.NUM_CARDS)).show(); 
+    }
 }
+
+
 /**
  * handler function for double click
  * @param globals   - object containing global variables
@@ -183,11 +203,10 @@ function handleDoubleClick(globals, cardClass) {
 			
             // Sort this and all others that can be sorted
             if (detectFinish(globals, cardIndex)) {
-				showFinish();
+                showFinish();
+            } else {
+                showArrow(globals, cardIndex);
             }
-			else{
-				showArrow(globals, cardIndex);
-			}
         }
     });
 }   
