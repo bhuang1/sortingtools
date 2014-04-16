@@ -42,7 +42,8 @@ function createCards(globals) {
             newCard.value = values[i];
             newCard.normalBack = BACKGROUND;
             newCard.sortedBack = SORTED_BACKGROUND;
-            newCard.frontFace = FOREGROUND + cardNumbers[i] + '_of_' + cardSuits[(i+j)%4] + '.svg';
+            newCard.frontFace = FOREGROUND + cardNumbers[i] + '_of_'
+		+ cardSuits[(i+j)%4] + '.svg';
             cardArray.push(newCard);
             cards[i+j] = newCard;
         }
@@ -73,7 +74,12 @@ function createCardHTML(globals, divElem) {
     var newHTML = [];
     var cardArray = globals.cardArray;
     for (var i = 0; i < globals.NUM_CARDS; i++) {
-        newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"><div class="overlay" style="background-image:url(' + cardArray[i].frontFace + ');"></div></div>');
+        newHTML.push('<div class="card" id="' + cardArray[i].num +
+		'" style="background-image:url(' + cardArray[i].normalBack +
+		'); position:absolute; top:0px; left:' + cardArray[i].xPos +
+		'px; z-index:' + cardArray[i].zIndex +
+		'"><div class="overlay" style="background-image:url(' +
+		cardArray[i].frontFace + ');"></div></div>');
     }
 
     $(divElem).html(newHTML.join(''));
@@ -89,8 +95,13 @@ function setUpArrows(globals, divElem){
     var newHTML = [];
     var cardArray = globals.cardArray;
     for (var i = 0; i < globals.NUM_CARDS; i++) {
-        newHTML.push('<span class="glyphicon glyphicon-arrow-right" id="r' + i + '" style="display: none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
-        newHTML.push('<span class="glyphicon glyphicon-arrow-left" id="l' + (i + globals.NUM_CARDS) + '" style="display: none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
+        newHTML.push('<span class="glyphicon glyphicon-arrow-right" id="r' + i
+                + '" style="display: none; position:absolute; top:0px; left:' +
+                (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
+        newHTML.push('<span class="glyphicon glyphicon-arrow-left" id="l' +
+                (i + globals.NUM_CARDS) +
+                '" style="display: none; position:absolute; top:0px; left:' +
+                (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
     }
     $(divElem).html(newHTML.join(''));
 }
