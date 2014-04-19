@@ -20,7 +20,7 @@ $(document).ready(function () {
     // Create the cards
     createCards(globals);
     createCardHTML(globals, '.card-area');
-	setUpArrows(globals, '.arr-area');
+    setUpArrows(globals, '.arr-area');
 	
     // Hover over a card
     handleHover(globals, '.card');

@@ -220,4 +220,4 @@ function handleDoubleClick(globals, cardClass) {
             }
         }
     });
-}   
+}
