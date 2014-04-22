@@ -30,3 +30,22 @@ Back end:
 
 * Python Flask
 * SQLite
+
+
+## Installation
+
+If you are on the ```master``` branch:
+
+```bash
+git clone https://github.com/bhuang1/sortingtools.git
+cd sortingtools/app
+python run.py
+```
+
+Alternatively, we have also provided a branch with no flask back-end, called the ```no_flask``` branch appropriately. In this case, simply
+
+```
+git clone https://github.com/bhuang1/sortingtools.git
+cd sortingtools/app/html
+open <name_of_file>.html
+```
