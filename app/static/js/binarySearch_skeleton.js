@@ -8,7 +8,7 @@ $(document).ready(function () {
         this.CARD_WIDTH =  120,
         this.PADDING =  120,
         this.SPACE =  Math.floor((this.WINDOW_WIDTH - this.CARD_WIDTH - 2 * this.PADDING) / (this.NUM_CARDS - 1)),
-        this.MAX_FLIP =  1, 
+        this.MAX_FLIP =  16, 
         this.totFlip =  0,
         this.ops =  0,
         this.mem =  0,
@@ -26,7 +26,7 @@ $(document).ready(function () {
     handleHover(globals, '.card');
 	
     // Double click
-    handleDoubleClick(globals, '.card');
+    handleClick(globals, '.card');
 	
     // handle the popping
     popHintsHTML();

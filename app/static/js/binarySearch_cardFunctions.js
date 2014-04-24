@@ -78,8 +78,7 @@ function createCardHTML(globals, divElem) {
 		'" style="background-image:url(' + cardArray[i].normalBack +
 		'); position:absolute; top:0px; left:' + cardArray[i].xPos +
 		'px; z-index:' + cardArray[i].zIndex +
-		'"><div class="overlay" style="background-image:url(' +
-		cardArray[i].frontFace + ');"></div></div>');
+		'"></div>');
     }
 
     $(divElem).html(newHTML.join(''));
@@ -199,6 +198,41 @@ function showArrow(globals, cardIndex) {
  * @param isSorted  - sorted function to be passed 
  * @param chainSort - function to propagate sorting if other cards are in place
  */
+function handleClick(globals, cardClass) {
+    $(cardClass).mousedown(function(event) {
+        var cardIndex = this.id;
+		
+		switch(event.which) {
+			case 1:
+				// If it's face up, make face down
+				if (globals.cards[cardIndex].flipped) {
+					flipOver(globals, cardIndex);
+				} 
+				// if it's face down
+				else if (globals.totFlip < globals.MAX_FLIP) {
+					incrementOps(globals);
+					setNewOps(globals);
+					reveal(globals, cardIndex);
+					
+					// Sort this and all others that can be sorted
+					if (detectFinish(globals, cardIndex)) {
+						showFinish();
+					} else {
+						showArrow(globals, cardIndex);
+					}
+				}
+			break;
+		}
+    });
+}
+
+/**
+ * handler function for double click
+ * @param globals   - object containing global variables
+ * @param cardClass - HTML class representing div elements with cards
+ * @param isSorted  - sorted function to be passed 
+ * @param chainSort - function to propagate sorting if other cards are in place
+ 
 function handleDoubleClick(globals, cardClass) {
     $(cardClass).dblclick(function () {
         var cardIndex = this.id;
@@ -221,3 +255,4 @@ function handleDoubleClick(globals, cardClass) {
         }
     });
 }
+*/
