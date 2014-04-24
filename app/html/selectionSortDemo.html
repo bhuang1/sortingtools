@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sorting Tool</title>
+
+    <!-- Javascript -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+	
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <!-- Our Code -->
+    <script type="text/javascript" src="../static/js/card_functions.js"></script>
+    <script type="text/javascript" src="../static/js/finish_functions.js"></script>
+    <script type="text/javascript" src="../static/js/maxCard_functions.js"></script>
+    <script type="text/javascript" src="../static/js/stats_functions.js"></script>
+    <script type="text/javascript" src="../static/js/selectionSortDemo_functions.js"></script>
+    <script type="text/javascript" src="../static/js/selectionSortDemo_skeleton.js"></script>
+
+    <!-- CSS -->
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <!-- custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet">
+
+    <!-- js for the menu -->
+    <script src="../static/js/docs.min.js"></script>
+</head>
+
+<body oncontextmenu="return false;" style="padding-top: 50px;">
+
+    <!-- NAVBAR -->
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Selection Sort</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="selectionSortLecture.html">Lecture</a></li>
+                <li class="active"><a href="selectionSortDemo.html">Demo</a></li>
+                <li><a href="assisted_selectionSort.html">Assisted</a></li>
+                <li><a href="selectionSort.html">Exercise</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Algorithms<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="sectionLeading.html">Selection Sort</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Algorithms</li>
+                    <li><a href="#">Binary Search</a></li>
+                    <li><a href="#">Insertion Sort</a></li>
+                    <li><a href="#">Heap Sort</a></li>
+                    <li><a href="#">Merge Sort</a></li>
+                    <li><a href="#">Bucket Sort</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- /container -->
+    </div> <!-- /navbar-wrapper -->
+
+    <!-- Sorting Area -->
+    <div class="sort-area"></div>
+    <br>
+    <br>
+    <div class="droppable" id="drop-id"></div>
+    <div class="min-text">Maximum</div>
+
+    <!-- Stats -->
+    <form id="stats" action="">
+        <label style="font-weight:normal;">Memory:</label>
+        <input type="text" id="mem" name="mem" readonly />
+        <br>
+        <label style="font-weight:normal;">Operations:</label>
+        <input type="text" id="ops" name="ops" readonly />
+    </form>
+
+    <!-- Begin animation -->
+    <button id="hintButton" type="button" class="btn btn-info">Start</button>
+</body>
+</html>

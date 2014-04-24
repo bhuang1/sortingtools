@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sorting Tool</title>
+
+    <!-- Javascript -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <!-- Our Code -->
+    <script type="text/javascript" src="../static/js/card_functions.js"></script>
+    <script type="text/javascript" src="../static/js/finish_functions.js"></script>
+    <script type="text/javascript" src="../static/js/maxCard_functions.js"></script>
+    <script type="text/javascript" src="../static/js/popover_functions.js"></script>
+    <script type="text/javascript" src="../static/js/selectionSort_functions.js"></script>
+    <script type="text/javascript" src="../static/js/stats_functions.js"></script>
+    <script type="text/javascript" src="../static/js/selectionSort_skeleton.js"></script>
+    
+
+    <!-- CSS -->
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <!-- custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet">
+
+    <!-- js for the menu -->
+    <script src="../static/js/docs.min.js"></script>
+</head>
+
+<body style="padding-top: 60px;">
+
+    <!-- NAVBAR -->
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Selection Sort</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="selectionSortLecture.html">Lecture</a></li>
+                <li><a href="selectionSortDemo.html">Demo</a></li>
+                <li><a href="assisted_selectionSort.html">Assisted</a></li>
+                <li><a href="selectionSort.html">Exercise</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Algorithms<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="sectionLeading.html">Selection Sort</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Algorithms</li>
+                    <li><a href="#">Binary Search</a></li>
+                    <li><a href="#">Insertion Sort</a></li>
+                    <li><a href="#">Heap Sort</a></li>
+                    <li><a href="#">Merge Sort</a></li>
+                    <li><a href="#">Bucket Sort</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- /container -->
+    </div> <!-- /navbar-wrapper -->
+
+    <!-- LECTURE -->
+    <div class="container">
+       <h1>Sort the Bounty!</h1>
+       <p>You're on a cruise, and all seems to be going well until terrifying lego pirates invade your ship. They have a problem, you see. They have all these gold bars, and they need to sort their bounty by size. They grab the only computer scientist aboard the cruise: you. Tasked with sorting their bounty (or walking the plank!) you scramble. You can't think straight. What's the simplest, most brain-dead algorithm you can follow to satiate these terrifying plastic pirates?</p>
+       <script type="text/javascript" src="http://www.everystockphoto.com/widget.php?imageId=1080391&size=medium"></script>
+       <p>Ah, yes. Selection sort! You quickly remember that introductory computer science course that you kind of slept through. But come on, it's so intuitive. So intuitive that even an uneducated pirate could do it!</p>
+       <p>You see the thirteen gold bars laid out before you. Picking up the largest one, you place it at the very left corner of the ship. You then go back to the gold bars to find the largest of the ones that remain there. Taking this next largest gold bar, you place it to the right of the one you just placed. You continue like this until all thirteen are sorted.</p>
+       <p>"Arrr they sorted?" One of the pirates gruffly asks.</p>
+       <p>Thankfully, they are. In fact, with so few gold bars to sort, selection sort is actually quite fast! With input sizes slower than this, selection sort becomes very slow. In terms of space, selection sort can be done in place, which computer scientists call "constant space", or <code>O(1)</code> space. In place means that given an array of things to sort, insertion sort can modify the existing array rather than creating a new array, so it takes no extra space.</p>
+       <p>In fact, in the way we sorted above when the pirates were threatening us, we created a whole new array. Notice that we took the gold bars and put them in an entirely new location. If we were to do the same thing in place, we could just rearrange the gold bars rather than transfer them to a new location.</p>
+       <p>What would this look like? We'd find the smallest gold bar and swap it with gold bar in the left-most position. Then find the second smallest gold bar and swap it with the gold bar just to the right of the lest-most position. Continuing like this with many swaps, we are using the same space on the ship deck, rather than moving it to a different location.</p>
+       <p>We already established that for a number as small as thirteen, selection sort is fast enough. But how fast is selection sort exactly?</p>
+       <p>We know that we must examine every element at least once. So if there are <code>n</code> gold blocks to sort, and we have to examine each one once, we know that selection sort is at <em>least</em> <code>O(n)</code>. But we are doing more than just examining each element once. Let's imagine the worst case: it's sorted in reverse order.</p>
+       <p>What would happen? The first time, we examine all <code>n</code> gold blocks before finding the smallest. We then move it to the sorted group somewhere far away. Then we go through all <code>n - 1</code> gold blocks to find the second smallest one, and we sort that as well. Then we go through <code>n - 2</code> blocks, and we keep repeating until we've sorted all the blocks. So how many are we really examining? We're examining <code>n + (n-1) + (n-2) + ... + 2 + 1</code>.</p>
+       <p>Those of you familiar with maths will recognize this as an arithmetic sum of <code>n</code>, and the way to solve an arithmetic sum is <code>n*(n+1)/2</code>, which is <code>(n^2 + n)/2</code>. Of course, in big-Oh notation, we ignore constants and choose the leading term, which gives us <code>O(n^2)</code>.</p>
+       <p>This makes intuitive sense. Selection sort is fast for small numbers, but because of the polynomial complexity, it grows very fast as the size of the input increases. So had the pirates presented you with a great deal more bounty to sort, you'd be pressed to find a better algorithm. Luckily, these weren't very good pirates. I mean, just thirteen gold blocks?</p>
+    </div> <!-- /container -->
+</body>
+</html>

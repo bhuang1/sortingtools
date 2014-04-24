@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sorting Tool</title>
+
+    <!-- Javascript -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+
+    <!-- Our Code -->
+    <script type="text/javascript" src="../static/js/card_functions.js"></script>
+    <script type="text/javascript" src="../static/js/finish_functions.js"></script>
+    <script type="text/javascript" src="../static/js/maxCard_functions.js"></script>
+    <script type="text/javascript" src="../static/js/popover_functions.js"></script>
+    <script type="text/javascript" src="../static/js/selectionSort_functions.js"></script>
+    <script type="text/javascript" src="../static/js/stats_functions.js"></script>
+    <script type="text/javascript" src="../static/js/selectionSort_skeleton.js"></script>
+    
+
+    <!-- CSS -->
+    <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <!-- custom styles for this template -->
+    <link href="../static/css/carousel.css" rel="stylesheet">
+
+    <!-- js for the menu -->
+    <script src="../static/js/docs.min.js"></script>
+</head>
+
+<body oncontextmenu="return false;" style="padding-top: 50px;">
+
+   <!-- Congratulations Alert -->
+    <div class="alert" style="display: none"> 
+        <a class="close" data-hide="alert">x</a>  
+        <strong>Congratulations!</strong> Everything is sorted correctly.</div>
+    
+    <!-- Sorting Area -->
+    <div class="sort-area"></div>
+    <br>
+    <br>
+    <div class="droppable" id="drop-id"></div>
+    <div class="min-text">Maximum</div>
+    <!-- Stats -->
+    <form id="stats" action="{{ url_for('add_stat', older_path = request.path.split('/')[1 ]) }}" method=post>
+		<label style="font-weight:normal;">Memory:
+            <input type="text" id="mem" name="mem" readonly></input>
+        </label>
+        <br>
+        <label style="font-weight:normal;">Operations:
+            <input type="text" id="ops" name="ops" readonly></input>
+        </label>
+        <br> <input id="submitStats" type="submit" class="btn btn-info" value="Submit">
+    </form>
+
+</body>
+</html>
