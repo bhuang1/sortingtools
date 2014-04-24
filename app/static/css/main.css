@@ -67,9 +67,9 @@ footer {
     display: inline-block;
     height: 160px;
     width: 120px;
-    position:fixed;
-    top:325px;
-    right:10px;
+    position:absolute;
+    top:45%;
+    right:12%;
     float: right;
     /* Mozilla */
     -moz-border-radius: 15px;
@@ -90,9 +90,9 @@ footer {
 .min-text {
     clear:both;
     display: inline-block;
-    position:fixed;
-    top:500px;
-    right:35px;
+    position:absolute;
+    top:42%;
+    right:15%;
     float: right;
     /* Mozilla */
     -moz-border-radius: 15px;
@@ -104,7 +104,7 @@ footer {
 /* popover CSS starts here */
 #hintButton {
     position:absolute;
-    top:95%;
+    top:10%;
     right:50%;
 }
 .popover {
@@ -113,9 +113,9 @@ footer {
 #stats {
     clear:both;
     display: inline-block;
-    position:fixed;
-    top:395px;
-    left:35px;
+    position:absolute;
+    top:50%;
+    right:60%;
     float: left;
     /* Mozilla */
     -moz-border-radius: 15px;
@@ -230,4 +230,33 @@ footer {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   border-color: #57a957 #57a957 #3d773d;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+
+div#container
+{
+    w/*idth:840px;
+    height:317px;*/
+    overflow:scroll;     /* if you don't want a scrollbar, set to hidden */
+    overflow-x:hidden;   /* hides horizontal scrollbar on newer browsers */
+
+    /* resize and min-height are optional, allows user to resize viewable area */
+    -webkit-resize:vertical; 
+    -moz-resize:vertical;
+    resize:vertical;
+    min-height:317px;
+}
+
+iframe#embed
+{
+    width:1000px;       /* set this to approximate width of entire page you're embedding */
+    height:2000px;      /* determines where the bottom of the page cuts off */
+    margin-left:-183px; /* clipping left side of page */
+    margin-top:-244px;  /* clipping top of page */
+    overflow:hidden;
+
+    /* resize seems to inherit in at least Firefox */
+    -webkit-resize:none;
+    -moz-resize:none;
+    resize:none;
 }
