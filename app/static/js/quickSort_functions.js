@@ -23,8 +23,6 @@
 */
 
 function legalMove(globals, ui, initPos, endPos) {
-	alert("Stuff " + endPos);
-	alert("R: " + globals.cardArray[initPos].rightPivot + " L: "+ globals.cardArray[initPos].leftPivot);
     return !globals.cardArray[initPos].sorted && globals.pivot_index !== undefined && initPos != globals.pivot_pos && (endPos < globals.cardArray[initPos].rightPivot && endPos > globals.cardArray[initPos].leftPivot);
 }
 
@@ -39,18 +37,13 @@ function legalMove(globals, ui, initPos, endPos) {
  * if Both tests succeed, then the pivot is sorted. 
  */
 function chainSort(globals) {
-	//alert("Called!");
 	var pindex = globals.pivot_pos;
-	//alert(pindex);
 	var pval = globals.pivot_value;
-	//alert(pval);
 	var cardArray = globals.cardArray;
 	
 	
 	for (var i=pindex + 1; i < cardArray[pindex].rightPivot; i++){
-		//alert(cardArray[i].value);
 		if (cardArray[i].value > pval){
-			alert("Crap!"); 
 			return false;
 		}
 	}
@@ -58,12 +51,10 @@ function chainSort(globals) {
 	for(var i=pindex - 1; i > cardArray[pindex].leftPivot ; i--){
 		//alert(cardArray[i].value);
 		if (cardArray[i].value < pval) {
-			alert("Crap!"); 
 			return false;
 		}
 	}
 	
-	alert("We gon sort!");
 	for (var i=pindex + 1; i < cardArray[pindex].rightPivot; i++){
 		cardArray[i].leftPivot = pindex;
 	}

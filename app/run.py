@@ -129,7 +129,11 @@ def heapSort():
 @app.route('/binarySearch')
 def binarySearch():
 	return render_template('binarySearch.html')
-	
+
+@app.route('/quickSort')
+def quickSort():
+	return render_template('quickSort.html')
+
 @app.route('/logout')
 def logout():
   session.pop('logged_in', None)
