@@ -23,6 +23,9 @@ function animToQueue(theQueue, selector, props, css, globals, params) {
                 backgroundImage: 'url(' +
                                      globals.cardArray[params].normalBack + ')'
             });
+        // Display arrow
+        } else if (css == "arrow") {
+            $(selector).show();
         }
 
         // Animation
@@ -45,8 +48,10 @@ function autoSort(cards, goal) {
     var steps = ['consider:'+guess]
     for ( ; cards[guess] != goal; ) {
         if (cards[guess] > goal) {
+            steps.push('arrow:l'+guess);
             end = guess;
         } else {
+            steps.push('arrow:r'+guess);
             start = guess;
         }
         steps.push('unconsider:'+guess);
@@ -103,4 +108,15 @@ function consider(globals, params, q) {
 function unconsider(globals, params, q) {
     animToQueue(q, '#' + globals.cardArray[params].num,
             {top:'0px'}, "flip", globals, params);
+}
+
+
+/**
+ * Display an arrow to guide the user.
+ * @param globals - the globals
+ * @param params  - the parameters of the string command
+ * @param q       - the queue of animations
+ */
+function arrow(globals, params, q) {
+    animToQueue(q, '#' + params, {top:'0px'}, "arrow", globals, params);
 }
