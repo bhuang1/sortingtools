@@ -30,7 +30,7 @@ function autoSort(cards) {
         }
 
         steps.push('move:'+i+';to;'+j);
-        steps.push('markSorted:'+i);
+        steps.push('markSorted:'+j);
         cards.move(i, j);
         sortedArrayEnd++;
     }
@@ -63,18 +63,13 @@ function animToQueue(theQueue, selector, props, css, globals, params) {
             $(select).css({
                 backgroundImage: 'url(' + globals.cardArray[params].normalBack + ')'
             });
-        // Mark card as new min / max
-        } else if (css === "min") {
-            var select = '#' + globals.cardArray[params].num;
-            $('.droppable').css('background-image',
-                'url(' + globals.cardArray[params].frontFace + ')');
         // Set card as sorted
         } else if (css == "sort") {
-            var select = '#' + globals.cards[params].num;
+            var select = '#' + globals.cardArray[params].num;
             spacifyCards(globals);
-            $(selector).css({
-                backgroundImage:'url(' + globals.cards[params].sortedBack + ')'
-            });
+            //$(selector).css({
+            //    backgroundImage:'url(' + globals.cardArray[params].sortedBack + ')'
+            //});
         } else if (css == "move") {
             var to = params.split(';')[2];
             var from = params.split(';')[0];
@@ -82,8 +77,6 @@ function animToQueue(theQueue, selector, props, css, globals, params) {
             $(select).insertBefore($('#' + globals.cardArray[to].num));
             // Update globals.cardArray
             globals.cardArray.move(from, to);
-        } else if (css == "unmin") {
-            var select = '#' + globals.cardArray[params].num;
         }
 
         // Animation
@@ -110,7 +103,7 @@ function animate_cards(instructions, globals) {
             console.log('Error- ' + inst + ' not a function');
         }
     }
-  
+
     // Set button to 'Restart' at very end
     $('#hintButton').text('Restart').button('refresh');
 }
@@ -171,7 +164,7 @@ function unmarkMin(globals, params, q) {
  * @param q       - the queue of animations
  */
 function markSorted(globals, params, q) {
-    animToQueue(q, '#' + globals.cards[params].num,
+    animToQueue(q, '#' + globals.cardArray[params].num,
             {top:'0px'}, "sort", globals, params);
 }
 
