@@ -9,7 +9,7 @@ Array.prototype.move = function(from, to) {
 
 
 /*
- * Automatically performs selection sort.
+ * Automatically performs insertion sort.
  * @param cards - the list of cards
  * @return The steps needed to sort the cards
  */
@@ -67,9 +67,6 @@ function animToQueue(theQueue, selector, props, css, globals, params) {
         } else if (css == "sort") {
             var select = '#' + globals.cardArray[params].num;
             spacifyCards(globals);
-            //$(selector).css({
-            //    backgroundImage:'url(' + globals.cardArray[params].sortedBack + ')'
-            //});
         } else if (css == "move") {
             var to = params.split(';')[2];
             var from = params.split(';')[0];

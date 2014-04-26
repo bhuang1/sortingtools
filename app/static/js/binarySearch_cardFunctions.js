@@ -61,7 +61,6 @@ function createCards(globals) {
     globals.cards = cards;
     var targetIndex = Math.ceil(Math.random() * 10) % globals.NUM_CARDS;
     globals.targetValue = cards[targetIndex].value;
-    setMaxCardValue('.droppable', targetIndex, globals);
 }
 
 
