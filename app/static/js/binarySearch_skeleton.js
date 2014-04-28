@@ -28,6 +28,9 @@ $(document).ready(function () {
     // Double click
     handleClick(globals, '.card');
 	
+    // refresh page
+    refreshPage('#resetButton');
+    
     // handle the popping
     popHintsHTML();
     popHints();

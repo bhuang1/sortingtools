@@ -48,3 +48,19 @@ function resetCards(globals) {
     });   
 }
 
+/*
+ * Checks to see if element exists in doc, since all js elements have some length
+ */
+function elementInDocument(element) {
+    if($(element).length)
+        return true;
+    return false;
+}
+
+function refreshPage(element) {
+    if(elementInDocument(element)){
+        $(element).click(function() {
+            window.location.reload();
+        });
+    } 
+}

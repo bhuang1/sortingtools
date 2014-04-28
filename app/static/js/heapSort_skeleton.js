@@ -38,6 +38,9 @@ $(document).ready(function () {
     // Handle drag and drop
     handleDragDrop(globals, '.sort-area', legalMove, isSorted, chainSort);
 	
+    // Refresh page
+    refreshPage('#resetButton');
+    
     // handle the popping
     popHintsHTML();
     popHints();

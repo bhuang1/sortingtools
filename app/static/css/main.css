@@ -102,11 +102,18 @@ footer {
     border-radius: 15px;
 }
 /* popover CSS starts here */
-#hintButton {
+#resetButton {
     position:absolute;
-    top:95%;
+    top:10%;
     right:50%;
 }
+
+#hintButton {
+    position:absolute;
+    top:10%;
+    right:50%;
+}
+
 .popover {
     max-width: 800px;
 }
