@@ -61,7 +61,9 @@ function createCards(globals) {
     globals.cards = cards;
     var targetIndex = Math.ceil(Math.random() * 10) % globals.NUM_CARDS;
     globals.targetValue = cards[targetIndex].value;
-	alert(globals.targetValue);
+	var target_message = [];
+	target_message.push('You are looking for the ' + cardNumbers[values.indexOf(globals.targetValue)]);
+	$(".target-message").html(target_message.join(''));
 }
 
 
@@ -211,13 +213,10 @@ function handleClick(globals, cardClass) {
 				// if it's face down
 				else if (globals.totFlip < globals.MAX_FLIP) {
 					incrementOps(globals);
-					setNewOps(globals);
 					reveal(globals, cardIndex);
 					
-					alert("about to test");
 					// Sort this and all others that can be sorted
 					if (isTarget(globals, cardIndex)) {
-						alert("got Here");
 						showFinish();
 					} else {
 						showArrow(globals, cardIndex);
@@ -245,7 +244,6 @@ function handleDoubleClick(globals, cardClass) {
         // if it's face down
         else if (globals.totFlip < globals.MAX_FLIP) {
             incrementOps(globals);
-            setNewOps(globals);
             reveal(globals, cardIndex);
 			
             // Sort this and all others that can be sorted

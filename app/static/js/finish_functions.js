@@ -17,7 +17,7 @@
 function detectFinish(globals) {
         var numCards = globals.NUM_CARDS;
         var cards = globals.cards;
-        return cards[numCards - 1].sorted;
+        return cards[numCards - 2].sorted;
 }
 
 /*

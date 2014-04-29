@@ -8,16 +8,19 @@ $(document).ready(function () {
         this.CARD_WIDTH =  120,
         this.PADDING =  120,
         this.SPACE =  Math.floor((this.WINDOW_WIDTH - this.CARD_WIDTH - 2 * this.PADDING) / (this.NUM_CARDS - 1)),
-        this.MAX_FLIP =  16,
         this.totFlip =  0,
         this.ops =  0,
         this.mem =  0,
-        this.maxCard = undefined
+        this.maxCard = undefined,
 		this.leftBound = 0;
 		this.rightBound = 1;
 		this.nextCard = -1;
 		this.nextCardSeen = false;
 		this.cardAbbreviations = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
+		this.swapCardValue = -1;
+		this.swapCardIndex = -1;
+		this.BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_blue.svg';
+		this.SORTED_BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_red.svg';
     }
 
     var globals = new Globals();
@@ -30,17 +33,19 @@ $(document).ready(function () {
     handleHover(globals, '.card');
 
     // Double click
-    handleDoubleClick(globals, '.card', isSorted, chainSort);
+    handleDoubleClick(globals, '.card', chainSort);
 
     // Right click
-    handleRightClick(globals, isSorted, '.droppable', '.card', chainSort);
+    handleRightClick(globals, '.droppable', '.card', chainSort);
 
     // Handle drag and drop
-    handleDragDrop(globals, '.sort-area', legalMove, isSorted, chainSort);
+    handleDragDrop(globals, '.sort-area', legalMove, chainSort);
 	
-    // Refresh page
-    refreshPage('#resetButton');
-    
+	// Handle swap
+	handleNodeHover(globals, '.node');
+	handleSwap(globals, '.node');
+	handleNodeRightClick(globals, '.node');
+	
     // handle the popping
     popHintsHTML();
     popHints();

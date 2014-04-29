@@ -25,13 +25,6 @@ function setNewMem(globals) {
  */
 function incrementOps(globals){
     globals.ops++;
-}
-
-/**
- * Set HTML to new operations performed.
- * @param globals - object containing global variables
- */
-function setNewOps(globals) {
     $("#ops").val(globals.ops);
 }
 

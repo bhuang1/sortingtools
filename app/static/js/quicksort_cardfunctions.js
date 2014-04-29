@@ -79,7 +79,7 @@ function createCardHTML(globals, divElem) {
     var newHTML = [];
     var cardArray = globals.cardArray;
     for (var i = 0; i < globals.NUM_CARDS; i++) {
-		newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"><div class="overlay" style="background-image:url(' + cardArray[i].frontFace + ');"></div></div>');
+		newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].frontFace + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"></div>');
     }cardArray
 
     $(divElem).html(newHTML.join(''));
@@ -176,7 +176,6 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
                 if (globals.totFlip < globals.MAX_FLIP) {
                     if (this != globals.maxCard) {
                         incrementOps(globals);
-                        setNewOps(globals);
                     }
 					
 					// Update stats
@@ -253,7 +252,6 @@ function handleDoubleClick(globals, cardClass, chainSort) {
         // if it's face down
         else if (globals.totFlip < globals.MAX_FLIP) {
             incrementOps(globals);
-            setNewOps(globals);
             reveal(globals, cardIndex);
 			if (chainSort(globals)){setSorted(globals, globals.pivot_pos);};
         }
@@ -288,7 +286,6 @@ function handleDragDrop(globals, sortClass, legalMove, chainSort) {
             if (legalMove(globals, ui, startIndex, endIndex)) {
                 // Stats
                 incrementOps(globals);
-                setNewOps(globals);
 
                 // Move cards
                 spacifyCards(globals);

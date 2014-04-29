@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <title>Sorting Tool</title>
 
     <!-- Javascript -->
@@ -27,58 +26,61 @@
 
     <!-- CSS -->
     <!-- Our CSS -->
-    <link rel="stylesheet" type="text.css" href="../static/css/main.css">
-    <!-- custom styles for this template -->
-    <link href="../static/css/carousel.css" rel="stylesheet">
-
-    <!-- js for the menu -->
-    <script src="../static/js/docs.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../static/css/main.css">
 </head>
 
-<body oncontextmenu="return false;" style="padding-top: 20px;">
-
-    <!-- NAVBAR -->
-    <div class="navbar-wrapper">
-      <div class="container">
-
-        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-          <div class="container">
+<body oncontextmenu="return false;">
+    <!-- Menu -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">Selection Sort</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                </button> 
+                <a class="navbar-brand" href="#">Sorting</a>
             </div>
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li><a href="#">Lecture</a></li>
-                <li><a href="#">Demo</a></li>
-                <li class="active"><a href="#">Assisted</a></li>
-                <li><a href="#">Exercise</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Algorithms<b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="sectionLeading.html">Selection Sort</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Algorithms</li>
-                    <li><a href="#">Binary Search</a></li>
-                    <li><a href="#">Insertion Sort</a></li>
-                    <li><a href="#">Heap Sort</a></li>
-                    <li><a href="#">Merge Sort</a></li>
-                    <li><a href="#">Bucket Sort</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div> <!-- /container -->
-    </div> <!-- /navbar-wrapper -->
-
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Automatic</a></li>
+                    <li><a href="#">Assisted</a></li>
+                    <li class="active"><a href="#">Manual</a></li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Algorithm<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="selectionSort.html">Selection Sort</a></li>
+                            <li><a href="insertionSort.html">Insertion Sort</a></li>
+                            <li><a href="#">Merge Sort</a></li></li>
+                            <li><a href="heapSort.html">Heap Sort</a></li>
+							<li><a href="binarySearch.html">Binary Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Challenges<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Easy</a></li>
+                            <li><a href="#">Medium</a></li>
+                            <li><a href="#">Difficult</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Expert</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul></ul> <!-- why is this here? -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Module</a></li>
+                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Tutorial</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div> <!-- /.navbar-collapse -->
+        </div> <!-- /.container-fluid -->
+    </nav>
     
    <!-- Congratulations Alert -->
     <div class="alert" style="display: none"> 
@@ -93,7 +95,7 @@
     <div class="min-text">Maximum</div>
 
     <!-- Stats -->
-    <form id="stats" action="" method=post>
+    <form id="stats" action="{{ url_for('add_stat', older_path = request.path.split('/')[1 ])}}" method=post>
         <label style="font-weight:normal;">Memory:
             <input type="text" id="mem" name="mem" readonly></input>
         </label>
@@ -106,20 +108,21 @@
 
 	<!-- Heap Visualization -->
 	<div id="heap">
-		<img src="../static/images/HeapsortTree.png" height="100%" width= "100%">
-		<h2 id="node0">  </h2>
-		<h2 id="node1">  </h2>
-		<h2 id="node2">  </h2>
-		<h2 id="node3">  </h2>
-		<h2 id="node4">  </h2>
-		<h2 id="node5">  </h2>
-		<h2 id="node6">  </h2>
-		<h2 id="node7">  </h2>
-		<h2 id="node8">  </h2>
-		<h2 id="node9">  </h2>
-		<h2 id="node10">  </h2>
-		<h2 id="node11">  </h2>
-		<h2 id="node12">  </h2>
+		<img src="../static/images/HeapsortTree.png">
+		
+		<h2 id="node0" class="node">  </h2>
+		<h2 id="node1" class="node">  </h2>
+		<h2 id="node2" class="node">  </h2>
+		<h2 id="node3" class="node">  </h2>
+		<h2 id="node4" class="node">  </h2>
+		<h2 id="node5" class="node">  </h2>
+		<h2 id="node6" class="node">  </h2>
+		<h2 id="node7" class="node">  </h2>
+		<h2 id="node8" class="node">  </h2>
+		<h2 id="node9" class="node">  </h2>
+		<h2 id="node10" class="node">  </h2>
+		<h2 id="node11" class="node">  </h2>
+		<h2 id="node12" class="node">  </h2>
 		
 	</div>
 	
@@ -158,3 +161,4 @@
 
     </div>
 </body>
+
