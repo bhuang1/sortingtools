@@ -185,9 +185,6 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
 						globals.pivot_pos = $('#' + cardIndex).index();
 						setMaxCardValue(maxClass, cardIndex, globals);
 						globals.pivot_value = globals.cardArray[globals.pivot_pos].value;
-						alert("Pivot_pos, Pivot_value: " + globals.pivot_pos + " " + globals.pivot_value);
-					    alert("left bound" + globals.cardArray[globals.pivot_pos].leftPivot);
-					    alert("right bound" + globals.cardArray[globals.pivot_pos].rightPivot);
 						
 						// Change maxCard values and positions
 						resetPosition(globals);
@@ -288,7 +285,6 @@ function handleDragDrop(globals, sortClass, legalMove, chainSort) {
         stop: function (event, ui) {
 			endIndex = $(ui.item).index();
             var cardIndex = parseInt($(ui.item).attr('id'));
-			alert(startIndex);
             if (legalMove(globals, ui, startIndex, endIndex)) {
                 // Stats
                 incrementOps(globals);

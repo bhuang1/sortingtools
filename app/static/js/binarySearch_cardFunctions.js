@@ -22,7 +22,7 @@ function createCards(globals) {
     var FOREGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Ornamental_deck_';
     var cardNumbers = ['King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
     var values = [13,12,11,10,9,8,7,6,5,4,3,2];
-    var cardSuits = ['spades', 'clubs', 'diamonds', 'hearts'];
+    var cardSuits = ['clubs', 'diamonds'];
 
     // Randomized array of cards
     var cardArray = [];
@@ -43,7 +43,7 @@ function createCards(globals) {
             newCard.normalBack = BACKGROUND;
             newCard.sortedBack = SORTED_BACKGROUND;
             newCard.frontFace = FOREGROUND + cardNumbers[i] + '_of_'
-		+ cardSuits[(i+j)%4] + '.svg';
+		+ cardSuits[(i+j)%2] + '.svg';
             cardArray.push(newCard);
             cards[i+j] = newCard;
         }
@@ -61,6 +61,7 @@ function createCards(globals) {
     globals.cards = cards;
     var targetIndex = Math.ceil(Math.random() * 10) % globals.NUM_CARDS;
     globals.targetValue = cards[targetIndex].value;
+	alert(globals.targetValue);
 }
 
 
@@ -213,8 +214,10 @@ function handleClick(globals, cardClass) {
 					setNewOps(globals);
 					reveal(globals, cardIndex);
 					
+					alert("about to test");
 					// Sort this and all others that can be sorted
-					if (detectFinish(globals, cardIndex)) {
+					if (isTarget(globals, cardIndex)) {
+						alert("got Here");
 						showFinish();
 					} else {
 						showArrow(globals, cardIndex);

@@ -88,7 +88,6 @@ function setUpArrows(globals, divElem){
 		newHTML.push('<span class="glyphicon glyphicon-arrow-up" id="c' + i + '" style="display:none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
 	}
 	$(divElem).html(newHTML.join(''));
-	$("#c1").show();
 
 }
 
@@ -268,6 +267,9 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
             setNewOps(globals);
             reveal(globals, cardIndex);
 			
+			if (globals.totFlip == 1){	
+				$("#c1").show();
+			}
 			if (cardIndex == globals.nextCard && chainSort(globals)) {
 				alert("increment bound");
 				moveArrow(globals);
