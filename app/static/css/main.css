@@ -118,12 +118,12 @@ footer {
 /* popover CSS starts here */
 #resetButton {
     position:absolute;
-    top:10%;
+    top:50%;
     right:50%;
 }
 #hintButton {
     position:absolute;
-    top:10%;
+    top:50%;
     right:50%;
 }
 .popover {
