@@ -17,7 +17,7 @@
 function detectFinish(globals) {
         var numCards = globals.NUM_CARDS;
         var cards = globals.cards;
-        return cards[numCards - 1].sorted;
+        return cards[numCards - 2].sorted;
 }
 
 /*
@@ -48,3 +48,19 @@ function resetCards(globals) {
     });   
 }
 
+/*
+ * Checks to see if element exists in doc, since all js elements have some length
+ */
+function elementInDocument(element) {
+    if($(element).length)
+        return true;
+    return false;
+}
+
+function refreshPage(element) {
+    if(elementInDocument(element)){
+        $(element).click(function() {
+            window.location.reload();
+        });
+    } 
+}

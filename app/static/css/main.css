@@ -67,9 +67,9 @@ footer {
     display: inline-block;
     height: 160px;
     width: 120px;
-    position:absolute;
-    top:45%;
-    right:12%;
+    position:fixed;
+    top:325px;
+    right:10px;
     float: right;
     /* Mozilla */
     -moz-border-radius: 15px;
@@ -87,12 +87,26 @@ footer {
 .dropped {
     background: #f52;
 }
-.min-text {
+.target-message{
     clear:both;
     display: inline-block;
     position:absolute;
-    top:42%;
-    right:15%;
+    top:11%;
+    right:60%;
+    float: right;
+    /* Mozilla */
+    -moz-border-radius: 15px;
+    /* Chrome */
+    -webkit-border-radius: 15px;
+    /* The rest */
+    border-radius: 15px;
+}
+.min-text {
+    clear:both;
+    display: inline-block;
+    position:fixed;
+    top:500px;
+    right:35px;
     float: right;
     /* Mozilla */
     -moz-border-radius: 15px;
@@ -102,6 +116,11 @@ footer {
     border-radius: 15px;
 }
 /* popover CSS starts here */
+#resetButton {
+    position:absolute;
+    top:10%;
+    right:50%;
+}
 #hintButton {
     position:absolute;
     top:95%;
@@ -113,9 +132,9 @@ footer {
 #stats {
     clear:both;
     display: inline-block;
-    position:absolute;
-    top:50%;
-    right:60%;
+    position:fixed;
+    top:395px;
+    left:35px;
     float: left;
     /* Mozilla */
     -moz-border-radius: 15px;
@@ -131,82 +150,90 @@ footer {
 	left: 25%;
 }
 
+.node {
+	border-radius: 50%;
+	width: 11%;
+	height: 18%;
+	line-height: 80px;
+	text-align: center;
+}
+
 #node0 {
 	position: absolute;
-	top: 1%;
-	left: 52%;
+	top: -4%;
+	left: 48%;
 }
 
 #node1 {
 	position: absolute;
-	top: 28%;
-	left: 25%;
+	top: 22.5%;
+	left: 20.5%;
 }
 
 #node2 {
 	position: absolute;
-	top: 28%;
-	left: 79%;
+	top: 22.5%;
+	left: 75.25%;
 }
 
 #node3 {
 	position: absolute;
-	top: 55%;
-	left: 11%;
+	top: 49.5%;
+	left: 7%;
 }
 
 #node4 {
 	position: absolute;
-	top: 55%;
-	left: 38%;
+	top: 49.5%;
+	left: 34.25%;
 }
 
 #node5 {
 	position: absolute;
-	top: 55%;
-	left: 66%;
+	top: 49.5%;
+	left: 61.5%;
 }
 
 #node6 {
 	position: absolute;
-	top: 55%;
-	left: 93%;
+	top: 49.5%;
+	left: 89%;
 }
 
 #node7 {
 	position: absolute;
-	top: 83%;
-	left: 4%;
+	top: 76.75%;
+	left: 0%;
 }
 
 #node8 {
 	position: absolute;
-	top: 83%;
-	left: 18%;
+	top: 76.75%;
+	left: 13.75%;
 }
 
 #node9 {
 	position: absolute;
-	top: 83%;
-	left: 31%;
+	top: 76.75%;
+	left: 27.5%;
 }
 
 #node10 {
 	position: absolute;
-	top: 83%;
-	left: 45%;
+	top: 76.75%;
+	left: 41%;
 }
 
 #node11 {
 	position: absolute;
-	top: 83%;
-	left: 59%;
+	top: 76.75%;
+	left: 54.75%;
 }
 
 #node12 {
 	position: absolute;
-	top: 83%;
-	left: 72%;
+	top: 76.75%;
+	left: 68.5%;
 }
 
 .circle {
@@ -230,33 +257,4 @@ footer {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   border-color: #57a957 #57a957 #3d773d;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-}
-
-
-div#container
-{
-    w/*idth:840px;
-    height:317px;*/
-    overflow:scroll;     /* if you don't want a scrollbar, set to hidden */
-    overflow-x:hidden;   /* hides horizontal scrollbar on newer browsers */
-
-    /* resize and min-height are optional, allows user to resize viewable area */
-    -webkit-resize:vertical; 
-    -moz-resize:vertical;
-    resize:vertical;
-    min-height:317px;
-}
-
-iframe#embed
-{
-    width:1000px;       /* set this to approximate width of entire page you're embedding */
-    height:2000px;      /* determines where the bottom of the page cuts off */
-    margin-left:-183px; /* clipping left side of page */
-    margin-top:-244px;  /* clipping top of page */
-    overflow:hidden;
-
-    /* resize seems to inherit in at least Firefox */
-    -webkit-resize:none;
-    -moz-resize:none;
-    resize:none;
 }

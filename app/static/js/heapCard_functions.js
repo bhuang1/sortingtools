@@ -16,8 +16,6 @@
  * @param globals - the globals object
  */
 function createCards(globals) {
-    var BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_blue.svg';
-    var SORTED_BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_red.svg';
     var FOREGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Ornamental_deck_';
     var cardNumbers = ['Ace', 'King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2', 'Ace', 'King', 'Queen'];
     var cardSuits = ['spades', 'clubs', 'diamonds', 'hearts', 'spades', 'clubs', 'diamonds', 'hearts', 'spades', 'clubs', 'diamonds', 'diamonds', 'spades', 'clubs', 'diamonds', 'hearts'];
@@ -33,24 +31,19 @@ function createCards(globals) {
         newCard.num = i;
         newCard.flipped = false;
         newCard.sorted = false;
-        newCard.normalBack = BACKGROUND;
-        newCard.sortedBack = SORTED_BACKGROUND;
         newCard.frontFace = FOREGROUND + cardNumbers[i] + '_of_' + cardSuits[i] + '.svg';
         cardArray.push(newCard);
         cards[i] = newCard;
     }
 
     // Randomize ordering of cardArray
-    var currentIndex, temporaryValue, randomIndex;
-    currentIndex = cardArray.length;
-    while (0 !== currentIndex) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        temporaryValue = cardArray[currentIndex];
+    var temporaryValue, randomIndex;
+	for (currentIndex = cardArray.length-1; currentIndex >= 0; currentIndex--) {
+		randomIndex = Math.floor(Math.random() * (currentIndex+1));
+		temporaryValue = cardArray[currentIndex];
         cardArray[currentIndex] = cardArray[randomIndex];
         cardArray[randomIndex] = temporaryValue;
-    }
+	}
 
     // Set zIndex and xPos values based on randomized positions
     for (i = 0; i < globals.NUM_CARDS; i++) {
@@ -73,9 +66,9 @@ function createCardHTML(globals, divElem) {
     var newHTML = [];
     var cardArray = globals.cardArray;
     for (var i = 0; i < globals.NUM_CARDS; i++) {
-  //      newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"></div>');
+  //      newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + globals.BACKGROUND + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"></div>');
   //  }
-		newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + cardArray[i].normalBack + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"><div class="overlay" style="background-image:url(' + cardArray[i].frontFace + ');"></div></div>');
+		newHTML.push('<div class="card" id="' + cardArray[i].num + '" style="background-image:url(' + globals.BACKGROUND + '); position:absolute; top:0px; left:' + cardArray[i].xPos + 'px; z-index:' + cardArray[i].zIndex + '"><div class="overlay" style="background-image:url(' + cardArray[i].frontFace + ');"></div></div>');
     }
 
     $(divElem).html(newHTML.join(''));
@@ -87,22 +80,22 @@ function createCardHTML(globals, divElem) {
  * @param cardClass - HTML class representing card div elements
  */
 function handleHover(globals, cardClass) {
-    var speed = globals.SELECT_SPEED;
-    var move = globals.SELECT_MOVE;
-    var maxCard = globals.maxCard;
+	var cardIndex;
 
     $(cardClass).hover(function () {
+		cardIndex = $('#' + this.id).css("z-index")-globals.leftBound;
         if (!$(this).is(":animated")) {
             // Card goes up when mouse enters
-            $(this).animate({top:'-=' + move}, speed);
-			//$("#node" + $('#' + this.id).css("z-index")).addClass('circle');
+            $(this).animate({top:'-=' + globals.SELECT_MOVE}, globals.SELECT_SPEED);
+			$("#node" + cardIndex).css({"background": "#3366FF"});
         }
     }, function () {
         // Card sinks down when mouse leaves
-        $(this).animate({top:'0px'}, speed);
+        $(this).animate({top:'0px'}, globals.SELECT_SPEED);
         if (globals.maxCard != undefined){
             maxPosition(globals);
         }
+		$("#node" + cardIndex).css({"background": "none"});
     });
 }
 
@@ -112,19 +105,17 @@ function handleHover(globals, cardClass) {
  * @param id    - the id of the div element to be flipped over
  */
 function flipOver(globals, id) {
-    var cards = globals.cards;
     // Only do something if it was already revealed
     if (globals.cards[id].flipped) {
-		var cardPosition = $('#' + id).css("z-index");
-		cardPosition = cardPosition - globals.leftBound;
+		var cardPosition = $('#' + id).css("z-index") - globals.leftBound;
         globals.totFlip--;
         $('#' + id).css({
-            backgroundImage:'url(' + cards[id].normalBack + ')'
+            backgroundImage:'url(' + globals.BACKGROUND + ')'
         }); 
 		$("#node" + cardPosition).html('');
     }
 
-    cards[id].flipped = false;
+    globals.cards[id].flipped = false;
 }
 
 /**
@@ -133,12 +124,11 @@ function flipOver(globals, id) {
  * @param id - the id of the div element to be set to sorted
  */
 function setSorted(globals, id) {
-    var cards = globals.cards;
-    cards[id].sorted = true;
-    cards[id].flipped = false;
+    globals.cards[id].sorted = true;
+    globals.cards[id].flipped = false;
     globals.totFlip--;
     $('#' + id).css({
-        backgroundImage:'url(' + globals.cards[id].sortedBack + ')'
+        backgroundImage:'url(' + globals.SORTED_BACKGROUND + ')'
     })
 }
 
@@ -159,36 +149,32 @@ function spacifyCards(globals) {
 /**
  * handler function for right click
  * @param globals   - object containing global variables
- * @param isSorted  - sorted function to be passed 
  * @param maxClass  - HTML class representing card that is maxCard
  * @param cardClass - HTML class representing div elements with cards
  * @param chainSort - function to propagate sorting if other cards are in place
  */
  
-function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
+function handleRightClick(globals, maxClass, cardClass, chainSort) {
     $(cardClass).mousedown(function(event) {
         var cardIndex = this.id;
 
         switch (event.which) {
             // Value for right click
             case 3:
-                // If you're allowed to flip up any more cards
-                if (globals.totFlip < globals.MAX_FLIP && !($('#' + cardIndex).css("z-index") > globals.rightBound)) {
+                if (!($(this).index() > globals.rightBound)) {
                     if (this != globals.maxCard) {
                         incrementOps(globals);
-                        setNewOps(globals);
+						// Charge two cards if no max has been selected yet
+						if (globals.maxCard === undefined) {
+							globals.totFlip++;
+							maxMem(globals);
+							setNewMem(globals);
+						}
                     }
-					
-					// Update stats
-					if (globals.maxCard === undefined) {
-						globals.totFlip++;
-						maxMem(globals);
-						setNewMem(globals);
-					}
 
                     // Change maxCard values and positions
                     resetPosition(globals);
-                    globals.maxCard = new MaxCard(this);
+					globals.maxCard = this;
                     maxPosition(globals);
 					
 					if (cardIndex == globals.nextCard && !globals.nextCardSeen && chainSort(globals)) {
@@ -199,15 +185,14 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
 						}
 						else {
 							globals.leftBound = globals.leftBound+1;
-							globals.nextCard = globals.cardArray[globals.rightBound].num;
-							setSorted(globals, globals.cardArray[globals.leftBound-1].num);
-							for (var i = globals.leftBound; i <= globals.rightBound; i++) {
-								offset = i - globals.leftBound;
+							setSorted(globals, globals.cardArray[0].num);
+							globals.cardArray = globals.cardArray.slice(1);
+							for (var i = 0; i <= globals.rightBound-globals.leftBound; i++) {
 								if (globals.cardArray[i].flipped) {
-									$("#node" + offset).html(globals.cardAbbreviations[globals.cardArray[i].num]);
+									$("#node" + i).html(globals.cardAbbreviations[globals.cardArray[i].num]);
 								}
 								else {
-									$("#node" + offset).html('');
+									$("#node" + i).html('');
 								}
 							}
 							for (var i = globals.rightBound-globals.leftBound+1; i <= globals.rightBound; i++) {
@@ -219,18 +204,6 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
 					if (!globals.cards[cardIndex].flipped && !globals.cards[cardIndex].sorted) {
 						reveal(globals, cardIndex);
 					}
-
-					/*
-                    // if it's sorted as a result
-                    if (isSorted(globals, cardIndex)) {
-                        setSorted(globals, cardIndex);
-                        chainSort(globals, cardIndex);
-                        if (detectFinish(globals)) {
-                            showFinish();
-                        }
-					*/
-					
-                    // Otherwise just reveal
 
                     setMaxCardValue(maxClass, cardIndex, globals);
                 }
@@ -246,43 +219,38 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
  * @param id      - id of div element that was double clicked
  */
 function reveal(globals, id) {
-    if (globals.totFlip < globals.MAX_FLIP) {
-		if (id == globals.nextCard) {
-			globals.nextCardSeen = true;
-		}
-		var cardPosition = $('#' + id).css("z-index");
-		cardPosition = cardPosition - globals.leftBound;
-        globals.cards[id].flipped = true;
-		globals.totFlip++;
-        maxMem(globals);
-        setNewMem(globals);
-        $('#' + id).css({
-            backgroundImage: 'url(' + globals.cards[id].frontFace + ')'
-        });
-		$("#node" + cardPosition).html(globals.cardAbbreviations[globals.cardArray[cardPosition+globals.leftBound].num]);
-    }
+	if (id == globals.nextCard) {
+		globals.nextCardSeen = true;
+	}
+	var cardPosition = $('#' + id).css("z-index") - globals.leftBound;
+	globals.cards[id].flipped = true;
+	globals.totFlip++;
+	maxMem(globals);
+	setNewMem(globals);
+	$('#' + id).css({
+		backgroundImage: 'url(' + globals.cards[id].frontFace + ')'
+	});
+	$("#node" + cardPosition).html(globals.cardAbbreviations[globals.cardArray[cardPosition].num]);
 }
 
 /**
  * handler function for double click
  * @param globals   - object containing global variables
  * @param cardClass - HTML class representing div elements with cards
- * @param isSorted  - sorted function to be passed 
  * @param chainSort - function to propagate sorting if other cards are in place
  */
-function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
+function handleDoubleClick(globals, cardClass, chainSort) {
     $(cardClass).dblclick(function () {
         var cardIndex = this.id;
         // If it's sorted do nothing
-        if (globals.cards[cardIndex].sorted || $('#' + cardIndex).css("z-index") > globals.rightBound) {}
+        if (globals.cards[cardIndex].sorted || $(this).index() > globals.rightBound) {}
         // If it's face up, make face down
         else if (globals.cards[cardIndex].flipped) {
             flipOver(globals, cardIndex);
         } 
         // if it's face down and within the subarray to be sorted
-        else if (globals.totFlip < globals.MAX_FLIP) {
+        else {
             incrementOps(globals);
-            setNewOps(globals);
 			
 			if (cardIndex == globals.nextCard && !globals.nextCardSeen && chainSort(globals)) {
 				if (globals.rightBound < globals.cardArray.length-1) {
@@ -292,15 +260,14 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
 				}
 				else {
 					globals.leftBound = globals.leftBound+1;
-					globals.nextCard = globals.cardArray[globals.rightBound].num;
-					setSorted(globals, globals.cardArray[globals.leftBound-1].num);
-					for (var i = globals.leftBound; i <= globals.rightBound; i++) {
-						offset = i - globals.leftBound;
+					setSorted(globals, globals.cardArray[0].num);
+					globals.cardArray = globals.cardArray.slice(1);
+					for (var i = 0; i <= globals.rightBound-globals.leftBound; i++) {
 						if (globals.cardArray[i].flipped) {
-							$("#node" + offset).html(globals.cardAbbreviations[globals.cardArray[i].num]);
+							$("#node" + i).html(globals.cardAbbreviations[globals.cardArray[i].num]);
 						}
 						else {
-							$("#node" + offset).html('');
+							$("#node" + i).html('');
 						}
 					}
 					for (var i = globals.rightBound-globals.leftBound+1; i <= globals.rightBound; i++) {
@@ -308,17 +275,7 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
 					}
 				}
 			}
-			
-			
 			reveal(globals, cardIndex);
-
-            // Sort this and all others that can be sorted
-			/*
-            if (isSorted(globals, cardIndex)) {
-                setSorted(globals, cardIndex);
-                chainSort(globals, cardIndex);
-            }
-			*/
         }
     });
 }
@@ -328,13 +285,10 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
  * @param globals   - object containing global variables
  * @param sortClass - HTML class of the div element containing sortable
  * @param legalMove - function to be passed in to determine legal move
- * @param isSorted  - sorted function to be passed 
  * @param chainSort - function to propagate sorting if other cards are in place
  */ 
    
-function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
-    var space = globals.SPACE;
-    var pad = globals.PADDING;
+function handleDragDrop(globals, sortClass, legalMove, chainSort) {
     var draggable_sibling;
 	var startIndex, endIndex;
 	var firstElement = false;
@@ -350,61 +304,52 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
 			else {
 				firstElement = true;
 			}
+			startIndex = startIndex - globals.leftBound;
         }, 
         stop: function (event, ui) {
-			endIndex = $(ui.item).index();
+			endIndex = $(ui.item).index() - globals.leftBound;
 			
-            if (legalMove(globals, ui, startIndex, endIndex)) {
-				var cardIndex = parseInt($(ui.item).attr('id'));
-				var offset;
-                
+            if (legalMove(globals, ui, startIndex+globals.leftBound, endIndex+globals.leftBound)) {
 				// Stats
                 incrementOps(globals);
-                setNewOps(globals);
-
                 // Move cards
                 spacifyCards(globals);
-				
 				// Update position in cardArray
 				var movedCard = globals.cardArray[startIndex];
 				if (endIndex > startIndex) {
 					for (var i = startIndex; i < endIndex; i++) {
-						offset = i - globals.leftBound;
 						globals.cardArray[i] = globals.cardArray[i+1];
 						if (globals.cardArray[i].flipped) {
-							$("#node" + offset).html(globals.cardAbbreviations[globals.cardArray[i].num]);
+							$("#node" + i).html(globals.cardAbbreviations[globals.cardArray[i].num]);
 						}
 						else {
-							$("#node" + offset).html('');
+							$("#node" + i).html('');
 						}
 					}
 					globals.cardArray[endIndex] = movedCard;
-					offset = endIndex - globals.leftBound;
 					if (globals.cardArray[endIndex].flipped) {
-						$("#node" + offset).html(globals.cardAbbreviations[globals.cardArray[endIndex].num]);
+						$("#node" + endIndex).html(globals.cardAbbreviations[globals.cardArray[endIndex].num]);
 					}
 					else {
-						$("#node" + offset).html('');
+						$("#node" + endIndex).html('');
 					}
 				}
 				else {
 					for (var i = startIndex; i > endIndex; i--) {
-						offset = i - globals.leftBound;
 						globals.cardArray[i] = globals.cardArray[i-1];
 						if (globals.cardArray[i].flipped) {
-							$("#node" + offset).html(globals.cardAbbreviations[globals.cardArray[i].num]);
+							$("#node" + i).html(globals.cardAbbreviations[globals.cardArray[i].num]);
 						}
 						else {
-							$("#node" + offset).html('');
+							$("#node" + i).html('');
 						}
 					}
 					globals.cardArray[endIndex] = movedCard;
-					offset = endIndex - globals.leftBound;
 					if (globals.cardArray[endIndex].flipped) {
-						$("#node" + offset).html(globals.cardAbbreviations[globals.cardArray[endIndex].num]);
+						$("#node" + endIndex).html(globals.cardAbbreviations[globals.cardArray[endIndex].num]);
 					}
 					else {
-						$("#node" + offset).html('');
+						$("#node" + endIndex).html('');
 					}
 				}
 				
@@ -419,22 +364,25 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
 					}
 					else {
 						globals.leftBound = globals.leftBound+1;
-						globals.nextCard = globals.cardArray[globals.rightBound].num;
-						setSorted(globals, globals.cardArray[globals.leftBound-1].num);
-						for (var i = globals.leftBound; i <= globals.rightBound; i++) {
-							offset = i - globals.leftBound;
+						setSorted(globals, globals.cardArray[0].num);
+						globals.cardArray = globals.cardArray.slice(1);
+						for (var i = 0; i <= globals.rightBound-globals.leftBound; i++) {
 							if (globals.cardArray[i].flipped) {
-								$("#node" + offset).html(globals.cardAbbreviations[globals.cardArray[i].num]);
+								$("#node" + i).html(globals.cardAbbreviations[globals.cardArray[i].num]);
 							}
 							else {
-								$("#node" + offset).html('');
+								$("#node" + i).html('');
 							}
 						}
 						for (var i = globals.rightBound-globals.leftBound+1; i <= globals.rightBound; i++) {
 							$("#node" + i).html('');
 						}
+						if (detectFinish(globals)) {
+							showFinish();
+						}
 					}
 				}
+				
             // Not legal - return to previous position
             } 
 			else {
@@ -448,19 +396,146 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
                     'top': '0px'
                 });
             }
-
-            // Handle sortedness as a result of the drag / drop
-			/*
-            if (isSorted(globals, cardIndex)) {
-
-				setSorted(globals, cardIndex);
-                chainSort(globals, cardIndex);
-
-                if (detectFinish(globals.NUM_CARDS)) {
-                    showFinish();
-				}
-            }
-			*/
         }
     });
 }
+
+function handleSwap(globals, swapClass) {
+	$(swapClass).click( function () {
+		if(globals.swapCardValue == -1 && this.id.slice(4) <= globals.rightBound) {
+			globals.swapCardValue = globals.cardArray[this.id.slice(4)].num;
+			globals.swapCardIndex = Number(this.id.slice(4));
+		}
+		//check if swap is allowed
+		else if(this.id.slice(4) != globals.swapCardIndex && this.id.slice(4) <= globals.rightBound 
+		&& (Number(this.id.slice(4)) == globals.swapCardIndex*2 + 1 || Number(this.id.slice(4)) == globals.swapCardIndex*2 + 2 ||
+		globals.swapCardIndex == Number(this.id.slice(4))*2 + 1 || globals.swapCardIndex == Number(this.id.slice(4))*2 + 2)){
+			//change positions in sort area
+			if(this.id.slice(4) == globals.swapCardIndex + 1) {
+				$("#" + globals.swapCardValue).insertAfter($("#" + globals.cardArray[this.id.slice(4)].num));
+			}
+			else if(this.id.slice(4) == globals.swapCardIndex - 1) {
+				$("#" + globals.cardArray[this.id.slice(4)].num).insertAfter($("#" + globals.swapCardValue));
+			}
+			else if(this.id.slice(4) != 0) {
+				$("#" + globals.cardArray[this.id.slice(4)].num).insertAfter($("#" + globals.swapCardValue));
+				$("#" + globals.swapCardValue).insertAfter($("#" + globals.cardArray[this.id.slice(4)-1].num));
+			}
+			else {
+				$("#" + globals.swapCardValue).insertAfter($("#" + globals.cardArray[this.id.slice(4)].num));
+				$("#" + globals.cardArray[this.id.slice(4)].num).insertAfter($("#" + globals.cardArray[globals.swapCardIndex-1].num));
+			}
+			spacifyCards(globals);
+			//change positions in globals.cardArray
+			var temp = globals.cardArray[this.id.slice(4)];
+			globals.cardArray[this.id.slice(4)] = globals.cardArray[globals.swapCardIndex];
+			globals.cardArray[globals.swapCardIndex] = temp;
+			//change positions in heap image
+			temp = $("#node" + globals.swapCardIndex).html();
+			$("#node" + globals.swapCardIndex).html($("#node" + this.id.slice(4)).html());
+			$("#node" + this.id.slice(4)).html(temp);
+			if (globals.nextCardSeen && chainSort(globals)) {
+				if (globals.rightBound < globals.cardArray.length-1) {
+					globals.rightBound = globals.rightBound+1;
+					globals.nextCard = globals.cardArray[globals.rightBound].num;
+					globals.nextCardSeen = false;
+				}
+				else {
+					globals.leftBound = globals.leftBound+1;
+					setSorted(globals, globals.cardArray[0].num);
+					globals.cardArray = globals.cardArray.slice(1);
+					for (var i = 0; i <= globals.rightBound-globals.leftBound; i++) {
+						if (globals.cardArray[i].flipped) {
+							$("#node" + i).html(globals.cardAbbreviations[globals.cardArray[i].num]);
+						}
+						else {
+							$("#node" + i).html('');
+						}
+					}
+					for (var i = globals.rightBound-globals.leftBound+1; i <= globals.rightBound; i++) {
+						$("#node" + i).html('');
+					}
+				}
+				if (detectFinish(globals)) {
+					showFinish();
+				}
+			}
+			//charge for the swap
+			incrementOps(globals);
+			globals.swapCardValue = -1;
+			
+		}
+		else {
+			globals.swapCardValue = -1;
+		}
+	});
+}
+
+function handleNodeRightClick(globals, flipClass) {
+    $(flipClass).mousedown(function () {
+		 switch (event.which) {
+			// Value for right click
+			case 3:
+				var cardIndex = globals.cardArray[this.id.slice(4)].num;
+				// If it's sorted do nothing
+				if (globals.cards[cardIndex].sorted || $('#' + cardIndex).css("z-index") > globals.rightBound) {}
+				// If it's face up, make face down
+				else if (globals.cards[cardIndex].flipped) {
+					flipOver(globals, cardIndex);
+				} 
+				// if it's face down and within the subarray to be sorted
+				else {
+					incrementOps(globals);
+					
+					if (cardIndex == globals.nextCard && !globals.nextCardSeen && chainSort(globals)) {
+						if (globals.rightBound < globals.cardArray.length-1) {
+							globals.rightBound = globals.rightBound+1;
+							globals.nextCard = globals.cardArray[globals.rightBound].num;
+							globals.nextCardSeen = false;
+						}
+						else {
+							globals.leftBound = globals.leftBound+1;
+							setSorted(globals, globals.cardArray[0].num);
+							globals.cardArray = globals.cardArray.slice(1);
+							for (var i = 0; i <= globals.rightBound-globals.leftBound; i++) {
+								if (globals.cardArray[i].flipped) {
+									$("#node" + i).html(globals.cardAbbreviations[globals.cardArray[i].num]);
+								}
+								else {
+									$("#node" + i).html('');
+								}
+							}
+							for (var i = globals.rightBound-globals.leftBound+1; i <= globals.rightBound; i++) {
+								$("#node" + i).html('');
+							}
+						}
+					}
+					
+					
+					reveal(globals, cardIndex);
+				}
+				break;
+		}
+    });
+}
+
+function handleNodeHover(globals, nodeClass) {
+	var cardId;
+
+    $(nodeClass).hover(function () {
+		cardId = globals.cardArray[this.id.slice(4)].num;
+        if (!$("#" + cardId).is(":animated")) {
+            // Card goes up when mouse enters
+            $("#" + cardId).animate({top:'-=' + globals.SELECT_MOVE}, globals.SELECT_SPEED);
+			$(this).css({"background": "#3366FF"});
+        }
+    }, function () {
+        // Card sinks down when mouse leaves
+        $("#" + cardId).animate({top:'0px'}, globals.SELECT_SPEED);
+        if (globals.maxCard != undefined){
+            maxPosition(globals);
+        }
+		$(this).css({"background": "none"});
+    });
+}
+	

@@ -37,6 +37,9 @@ $(document).ready(function () {
     // Handle drag and drop
     handleDragDrop(globals, '.card-area', legalMove, isSorted, chainSort);
 	
+    // Refresh page on button click - in finish_functions.js
+    refreshPage('#resetButton');
+
     // handle the popping
     popHintsHTML();
     popHints();

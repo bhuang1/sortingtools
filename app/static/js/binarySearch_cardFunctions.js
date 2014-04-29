@@ -22,7 +22,7 @@ function createCards(globals) {
     var FOREGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Ornamental_deck_';
     var cardNumbers = ['King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
     var values = [13,12,11,10,9,8,7,6,5,4,3,2];
-    var cardSuits = ['spades', 'clubs', 'diamonds', 'hearts'];
+    var cardSuits = ['clubs', 'diamonds'];
 
     // Randomized array of cards
     var cardArray = [];
@@ -43,7 +43,7 @@ function createCards(globals) {
             newCard.normalBack = BACKGROUND;
             newCard.sortedBack = SORTED_BACKGROUND;
             newCard.frontFace = FOREGROUND + cardNumbers[i] + '_of_'
-		+ cardSuits[(i+j)%4] + '.svg';
+		+ cardSuits[(i+j)%2] + '.svg';
             cardArray.push(newCard);
             cards[i+j] = newCard;
         }
@@ -61,7 +61,9 @@ function createCards(globals) {
     globals.cards = cards;
     var targetIndex = Math.ceil(Math.random() * 10) % globals.NUM_CARDS;
     globals.targetValue = cards[targetIndex].value;
-    setMaxCardValue('.droppable', targetIndex, globals);
+	var target_message = [];
+	target_message.push('You are looking for the ' + cardNumbers[values.indexOf(globals.targetValue)]);
+	$(".target-message").html(target_message.join(''));
 }
 
 
@@ -211,11 +213,10 @@ function handleClick(globals, cardClass) {
 				// if it's face down
 				else if (globals.totFlip < globals.MAX_FLIP) {
 					incrementOps(globals);
-					setNewOps(globals);
 					reveal(globals, cardIndex);
 					
 					// Sort this and all others that can be sorted
-					if (detectFinish(globals, cardIndex)) {
+					if (isTarget(globals, cardIndex)) {
 						showFinish();
 					} else {
 						showArrow(globals, cardIndex);
@@ -243,7 +244,6 @@ function handleDoubleClick(globals, cardClass) {
         // if it's face down
         else if (globals.totFlip < globals.MAX_FLIP) {
             incrementOps(globals);
-            setNewOps(globals);
             reveal(globals, cardIndex);
 			
             // Sort this and all others that can be sorted

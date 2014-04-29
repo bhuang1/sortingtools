@@ -17,6 +17,7 @@
     <!-- Our Code -->
     <script type="text/javascript" src="../static/js/binarySearch_cardFunctions.js"></script>
     <script type="text/javascript" src="../static/js/binarySearch_finishFunctions.js"></script>
+    <script type="text/javascript" src="../static/js/finish_functions.js"></script>
     <script type="text/javascript" src="../static/js/maxCard_functions.js"></script>
     <script type="text/javascript" src="../static/js/popover_functions.js"></script>
     <script type="text/javascript" src="../static/js/selectionSort_functions.js"></script>
@@ -34,13 +35,8 @@
 </head>
 
 <body oncontextmenu="return false;" style="padding-top: 50px;">
-
-
-   <!-- Congratulations Alert -->
-    <div class="alert" style="display: none"> 
-        <a class="close" data-hide="alert">x</a>  
-        <strong>Congratulations!</strong> You have found the card.</div>
-    
+    <button id="resetButton" type="button" class="btn btn-info">Reset</button>
+	<div class="target-message"></div>
     <!-- Sorting Area -->
     <div class="sort-area">
 		<div class="card-area"></div>
@@ -49,19 +45,7 @@
 	
 	<br>
     <br>
-    <div class="droppable" id="drop-id"></div>
-    <div class="min-text">Find this!</div>
-	    <!-- Stats -->
-    <form id="stats" action="" method=post>
-        <label style="font-weight:normal;">Memory:
-            <input type="text" id="mem" name="mem" readonly></input>
-        </label>
-        <br>
-        <label style="font-weight:normal;">Operations:
-            <input type="text" id="ops" name="ops" readonly></input>
-        </label>
-        <br> <input id="submitStats" type="submit" class="btn btn-info" value="Submit">
-    </form>
+	  
 
 </body>
 

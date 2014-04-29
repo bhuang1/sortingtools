@@ -88,7 +88,6 @@ function setUpArrows(globals, divElem){
 		newHTML.push('<span class="glyphicon glyphicon-arrow-up" id="c' + i + '" style="display:none; position:absolute; top:0px; left:' + (cardArray[i].xPos + 0.5*globals.CARD_WIDTH) + 'px"></span>');
 	}
 	$(divElem).html(newHTML.join(''));
-	$("#c1").show();
 
 }
 
@@ -183,8 +182,8 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
                 if (globals.totFlip < globals.MAX_FLIP && !($('#' + cardIndex).css("z-index") > globals.rightBound)) {
                     if (this != globals.maxCard) {
                         incrementOps(globals);
-                        setNewOps(globals);
                     }
+				
 					
 					// Update stats
 					if (!globals.cards[cardIndex].flipped) {
@@ -265,11 +264,12 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
         // if it's face down and within the subarray to be sorted
         else if (globals.totFlip < globals.MAX_FLIP) {
             incrementOps(globals);
-            setNewOps(globals);
             reveal(globals, cardIndex);
 			
+			if (globals.totFlip == 1){	
+				$("#c1").show();
+			}
 			if (cardIndex == globals.nextCard && chainSort(globals)) {
-				alert("increment bound");
 				moveArrow(globals);
 				globals.rightBound = globals.rightBound+1;
 				globals.nextCard = globals.cardArray[globals.rightBound].num;
@@ -288,7 +288,6 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
 
 function moveArrow(globals){
 	var bound = globals.rightBound;
-	alert(bound);
 	$("#c"+ bound).hide();
 	if (bound + 1 < globals.NUM_CARDS)
 		$("#c" + parseInt(bound+1)).show()
@@ -330,7 +329,6 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
                 
 				// Stats
                 incrementOps(globals);
-                setNewOps(globals);
 
                 // Move cards
                 spacifyCards(globals);
@@ -354,7 +352,6 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
 				// Added the check as a bug fix for https://trello.com/c/hFZl4hab
 				// still working as we expected for swapping.
 				if (chainSort(globals)) {
-					alert("increment bound");
 					moveArrow(globals);
 					globals.rightBound = globals.rightBound+1;
 					globals.nextCard = globals.cardArray[globals.rightBound].num;

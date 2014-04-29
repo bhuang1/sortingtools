@@ -171,7 +171,6 @@ function handleRightClick(globals, isSorted, maxClass, cardClass, chainSort) {
                 if (globals.totFlip < globals.MAX_FLIP) {
                     if (this != globals.maxCard) {
                         incrementOps(globals);
-                        setNewOps(globals);
                     }
 					
 					// Update stats
@@ -244,7 +243,6 @@ function handleDoubleClick(globals, cardClass, isSorted, chainSort) {
         // if it's face down
         else if (globals.totFlip < globals.MAX_FLIP) {
             incrementOps(globals);
-            setNewOps(globals);
             reveal(globals, cardIndex);
 
             // Sort this and all others that can be sorted
@@ -283,7 +281,6 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
             if (legalMove(globals, ui, startIndex)) {
                 // Stats
                 incrementOps(globals);
-                setNewOps(globals);
 
                 // Move cards
                 spacifyCards(globals);

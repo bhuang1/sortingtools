@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Sorting Tool</title>
 
     <!-- Javascript -->
@@ -15,18 +16,18 @@
 
 
     <!-- Our Code -->
-    <script type="text/javascript" src="../static/js/card_functions.js"></script>
+    <script type="text/javascript" src="../static/js/heapCard_functions.js"></script>
     <script type="text/javascript" src="../static/js/finish_functions.js"></script>
     <script type="text/javascript" src="../static/js/maxCard_functions.js"></script>
     <script type="text/javascript" src="../static/js/popover_functions.js"></script>
-    <script type="text/javascript" src="../static/js/selectionSort_functions.js"></script>
+    <script type="text/javascript" src="../static/js/heapSort_functions.js"></script>
     <script type="text/javascript" src="../static/js/stats_functions.js"></script>
-    <script type="text/javascript" src="../static/js/selectionSort_skeleton.js"></script>
+    <script type="text/javascript" src="../static/js/heapSort_skeleton.js"></script>
     
 
     <!-- CSS -->
     <!-- Our CSS -->
-    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" type="text.css" href="../static/css/main.css">
     <!-- custom styles for this template -->
     <link href="../static/css/carousel.css" rel="stylesheet">
 
@@ -34,16 +35,34 @@
     <script src="../static/js/docs.min.js"></script>
 </head>
 
-<body oncontextmenu="return false;" style="padding-top: 50px;">
-    <button id="resetButton" type="button" class="btn btn-info">Reset</button>
+<body oncontextmenu="return false;" style="padding-top: 20px;">
 
     <!-- Sorting Area -->
     <div class="sort-area"></div>
     <br>
     <br>
-    <div class="droppable" id="drop-id"></div>
-    <div class="min-text">Maximum</div>
 
+	<!-- Heap Visualization -->
+	<div id="heap">
+		<img src="../static/images/HeapsortTree.png" >
+		<h2 id="node0" class="node">  </h2>
+		<h2 id="node1" class="node">  </h2>
+		<h2 id="node2" class="node">  </h2>
+		<h2 id="node3" class="node">  </h2>
+		<h2 id="node4" class="node">  </h2>
+		<h2 id="node5" class="node">  </h2>
+		<h2 id="node6" class="node">  </h2>
+		<h2 id="node7" class="node">  </h2>
+		<h2 id="node8" class="node">  </h2>
+		<h2 id="node9" class="node">  </h2>
+		<h2 id="node10" class="node">  </h2>
+		<h2 id="node11" class="node">  </h2>
+		<h2 id="node12" class="node">  </h2>
+		
+	</div>
+	
+    <!-- Reset Button -->
+    <button id="resetButton" type="button" class="btn btn-info">Reset</button>
 
+    </div>
 </body>
-</html>
