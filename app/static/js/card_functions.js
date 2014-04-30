@@ -64,7 +64,17 @@ function createCards(globals) {
 }
 
 /**
- * Creates the HTML within the sorted area div element
+ * Checks to see if element exists in doc, since all js elements have some length
+ * @param element - the element we are checking the existence of
+ */
+function elementInDocument(element) {
+    if($(element).length)
+        return true;
+    return false;
+}
+
+/**
+ * Creates the HTML within the sorted area div element -- add button location
  * @param globals - the object containing all globals
  * @param divElem - the class of the div element containing all the cards
  */
@@ -78,6 +88,27 @@ function createCardHTML(globals, divElem) {
     }
 
     $(divElem).html(newHTML.join(''));
+
+    var pos = $(divElem).position();
+    var width = $(divElem).outerWidth();
+   
+    if (elementInDocument("#resssdetButton")) {
+        $("#resetButton").css({
+            position: "absolute",
+            top: pos.bottom + "px",
+            left: (pos.left + width) + "px"
+        }).show();
+    } else
+        alert("no reset button");
+
+    // if (elementInDocument("#hintButton")) {
+    //     $("#hintButton").css({
+    //         position: "absolute",
+    //         top: pos.bottom + "px",
+    //         left: (pos.left + width) + "px"
+    //     }).show();
+    // }
+    
 }
 
 /**
@@ -311,3 +342,5 @@ function handleDragDrop(globals, sortClass, legalMove, isSorted, chainSort) {
         }
     });
 }
+
+

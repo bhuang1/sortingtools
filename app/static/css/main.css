@@ -117,14 +117,17 @@ footer {
 }
 /* popover CSS starts here */
 #resetButton {
-    position:absolute;
-    top:50%;
-    right:50%;
+    position:fixed;
+    top:300px;
+    right:125px;
+    float: right;
+
 }
 #hintButton {
-    position:absolute;
-    top:50%;
-    right:50%;
+    position:fixed;
+    top:300px;
+    right:125px;
+    float: right;
 }
 .popover {
     max-width: 800px;
@@ -257,4 +260,10 @@ footer {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   border-color: #57a957 #57a957 #3d773d;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+ .frame {
+    overflow: hidden;
+
+
 }
