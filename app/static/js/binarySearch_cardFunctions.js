@@ -62,9 +62,9 @@ function createCards(globals) {
     globals.cards = cards;
     var targetIndex = Math.ceil(Math.random() * 10) % globals.NUM_CARDS;
     globals.targetValue = cards[targetIndex].value;
-	var target_message = [];
-	target_message.push('You are looking for the ' + cardNumbers[values.indexOf(globals.targetValue)]);
-	$(".target-message").html(target_message.join(''));
+    var target_message = [];
+    target_message.push('You are looking for the ' + cardNumbers[values.indexOf(globals.targetValue)]);
+    $(".target-message").html(target_message.join(''));
 }
 
 
