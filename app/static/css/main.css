@@ -118,13 +118,16 @@ footer {
 /* popover CSS starts here */
 #resetButton {
     position:fixed;
-    top:200px;
+    top:300px;
     right:125px;
+    float: right;
+
 }
 #hintButton {
     position:fixed;
-    top:200px;
+    top:300px;
     right:125px;
+    float: right;
 }
 .popover {
     max-width: 800px;
