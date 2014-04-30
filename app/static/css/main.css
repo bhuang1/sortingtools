@@ -1,7 +1,7 @@
 .sort-area {
     height: 25%;
     width: 100%;
-	position: relatife;
+	position: relative;
 }
 
 .arr-area{
@@ -91,7 +91,7 @@ footer {
     clear:both;
     display: inline-block;
     position:absolute;
-    top:11%;
+    top:51%;
     right:60%;
     float: right;
     /* Mozilla */
@@ -118,12 +118,12 @@ footer {
 /* popover CSS starts here */
 #resetButton {
     position:absolute;
-    top:10%;
+    top:50%;
     right:50%;
 }
 #hintButton {
     position:absolute;
-    top:10%;
+    top:50%;
     right:50%;
 }
 .popover {
