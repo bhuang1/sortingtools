@@ -110,35 +110,36 @@
     <!-- Hint Button -->
     <!-- linked to the div below by a few lines of javascript at the very beginning of our code -->
     <!-- messy code due to syntax highlighting -->
-    <button id="hintButton" type="button" class="btn btn-info" rel="popover" data-placement="top" data-title="Selection Sort">Hints</button>
-    <div id="popover_content_wrapper" style="display: none"> <pre style='color:#000020;background:#f6f8ff;'><body style='color:#000020; background:#f6f8ff; '><pre>
-<span style='color:#200080; font-weight:bold; '>function</span> insertionSort<span style='color:#308080; '>(</span>items<span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
+    <button id="hintButton" type="button" class="btn btn-info" rel="popover" data-placement="left" data-title="Selection Sort">Hints</button>
+    <div id="popover_content_wrapper" style="display: none"> 
+	
+	<!-- HTML generated using hilite.me --><div style="background: #f0f3f3; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #006699; font-weight: bold">function</span> insertionSort(items) {
 
-    <span style='color:#200080; font-weight:bold; '>var</span> len     <span style='color:#308080; '>=</span> items<span style='color:#308080; '>.</span>length<span style='color:#308080; '>,</span>     <span style='color:#595979; '>// number of items in the array</span>
-        value<span style='color:#308080; '>,</span>                      <span style='color:#595979; '>// the value currently being compared</span>
-        i<span style='color:#308080; '>,</span>                          <span style='color:#595979; '>// index into unsorted section</span>
-        j<span style='color:#406080; '>;</span>                          <span style='color:#595979; '>// index into sorted section</span>
+    <span style="color: #006699; font-weight: bold">var</span> len     <span style="color: #555555">=</span> items.length,     <span style="color: #0099FF; font-style: italic">// number of items in the array</span>
+        value,                      <span style="color: #0099FF; font-style: italic">// the value currently being compared</span>
+        i,                          <span style="color: #0099FF; font-style: italic">// index into unsorted section</span>
+        j;                          <span style="color: #0099FF; font-style: italic">// index into sorted section</span>
     
-    <span style='color:#200080; font-weight:bold; '>for</span> <span style='color:#308080; '>(</span>i<span style='color:#308080; '>=</span><span style='color:#008c00; '>0</span><span style='color:#406080; '>;</span> i <span style='color:#308080; '>&lt;</span> len<span style='color:#406080; '>;</span> i<span style='color:#308080; '>++</span><span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
+    <span style="color: #006699; font-weight: bold">for</span> (i<span style="color: #555555">=</span><span style="color: #FF6600">0</span>; i <span style="color: #555555">&lt;</span> len; i<span style="color: #555555">++</span>) {
     
-        <span style='color:#595979; '>// store the current value because it may shift later</span>
-        value <span style='color:#308080; '>=</span> items<span style='color:#308080; '>[</span>i<span style='color:#308080; '>]</span><span style='color:#406080; '>;</span>
+        <span style="color: #0099FF; font-style: italic">// store the current value because it may shift later</span>
+        value <span style="color: #555555">=</span> items[i];
         
-        <span style='color:#595979; '>/*</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* Whenever the value in the sorted section is greater than the value</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* in the unsorted section, shift all items in the sorted section over</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* by one. This creates space in which to insert the value.</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;*/</span>
-        <span style='color:#200080; font-weight:bold; '>for</span> <span style='color:#308080; '>(</span>j<span style='color:#308080; '>=</span>i<span style='color:#308080; '>-</span><span style='color:#008c00; '>1</span><span style='color:#406080; '>;</span> j <span style='color:#308080; '>></span> <span style='color:#308080; '>-</span><span style='color:#008c00; '>1</span> <span style='color:#308080; '>&amp;&amp;</span> items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>]</span> <span style='color:#308080; '>></span> value<span style='color:#406080; '>;</span> j<span style='color:#308080; '>--</span><span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
-            items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>+</span><span style='color:#008c00; '>1</span><span style='color:#308080; '>]</span> <span style='color:#308080; '>=</span> items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>]</span><span style='color:#406080; '>;</span>
-        <span style='color:#406080; '>}</span>
+        <span style="color: #0099FF; font-style: italic">/*</span>
+<span style="color: #0099FF; font-style: italic">         * Whenever the value in the sorted section is greater than the value</span>
+<span style="color: #0099FF; font-style: italic">         * in the unsorted section, shift all items in the sorted section over</span>
+<span style="color: #0099FF; font-style: italic">         * by one. This creates space in which to insert the value.</span>
+<span style="color: #0099FF; font-style: italic">         */</span>
+        <span style="color: #006699; font-weight: bold">for</span> (j<span style="color: #555555">=</span>i<span style="color: #555555">-</span><span style="color: #FF6600">1</span>; j <span style="color: #555555">&gt;</span> <span style="color: #555555">-</span><span style="color: #FF6600">1</span> <span style="color: #555555">&amp;&amp;</span> items[j] <span style="color: #555555">&gt;</span> value; j<span style="color: #555555">--</span>) {
+            items[j<span style="color: #555555">+</span><span style="color: #FF6600">1</span>] <span style="color: #555555">=</span> items[j];
+        }
 
-        items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>+</span><span style='color:#008c00; '>1</span><span style='color:#308080; '>]</span> <span style='color:#308080; '>=</span> value<span style='color:#406080; '>;</span>
-    <span style='color:#406080; '>}</span>
+        items[j<span style="color: #555555">+</span><span style="color: #FF6600">1</span>] <span style="color: #555555">=</span> value;
+    }
     
-    <span style='color:#200080; font-weight:bold; '>return</span> items<span style='color:#406080; '>;</span>
-<span style='color:#406080; '>}</span>
-</pre>
+    <span style="color: #006699; font-weight: bold">return</span> items;
+}
+</pre></div>
 
     </div>
 </body>

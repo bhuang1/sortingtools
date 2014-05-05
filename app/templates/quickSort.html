@@ -113,35 +113,65 @@
     <!-- Hint Button -->
     <!-- linked to the div below by a few lines of javascript at the very beginning of our code -->
     <!-- messy code due to syntax highlighting -->
-    <button id="hintButton" type="button" class="btn btn-info" rel="popover" data-placement="top" data-title="Selection Sort">Hints</button>
-    <div id="popover_content_wrapper" style="display: none"> <pre style='color:#000020;background:#f6f8ff;'><body style='color:#000020; background:#f6f8ff; '><pre>
-<span style='color:#200080; font-weight:bold; '>function</span> insertionSort<span style='color:#308080; '>(</span>items<span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
+    <button id="hintButton" type="button" class="btn btn-info" rel="popover" data-placement="left" data-title="Selection Sort">Hints</button>
+    <div id="popover_content_wrapper" style="display: none"> 
 
-    <span style='color:#200080; font-weight:bold; '>var</span> len     <span style='color:#308080; '>=</span> items<span style='color:#308080; '>.</span>length<span style='color:#308080; '>,</span>     <span style='color:#595979; '>// number of items in the array</span>
-        value<span style='color:#308080; '>,</span>                      <span style='color:#595979; '>// the value currently being compared</span>
-        i<span style='color:#308080; '>,</span>                          <span style='color:#595979; '>// index into unsorted section</span>
-        j<span style='color:#406080; '>;</span>                          <span style='color:#595979; '>// index into sorted section</span>
-    
-    <span style='color:#200080; font-weight:bold; '>for</span> <span style='color:#308080; '>(</span>i<span style='color:#308080; '>=</span><span style='color:#008c00; '>0</span><span style='color:#406080; '>;</span> i <span style='color:#308080; '>&lt;</span> len<span style='color:#406080; '>;</span> i<span style='color:#308080; '>++</span><span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
-    
-        <span style='color:#595979; '>// store the current value because it may shift later</span>
-        value <span style='color:#308080; '>=</span> items<span style='color:#308080; '>[</span>i<span style='color:#308080; '>]</span><span style='color:#406080; '>;</span>
-        
-        <span style='color:#595979; '>/*</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* Whenever the value in the sorted section is greater than the value</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* in the unsorted section, shift all items in the sorted section over</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* by one. This creates space in which to insert the value.</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;*/</span>
-        <span style='color:#200080; font-weight:bold; '>for</span> <span style='color:#308080; '>(</span>j<span style='color:#308080; '>=</span>i<span style='color:#308080; '>-</span><span style='color:#008c00; '>1</span><span style='color:#406080; '>;</span> j <span style='color:#308080; '>></span> <span style='color:#308080; '>-</span><span style='color:#008c00; '>1</span> <span style='color:#308080; '>&amp;&amp;</span> items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>]</span> <span style='color:#308080; '>></span> value<span style='color:#406080; '>;</span> j<span style='color:#308080; '>--</span><span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
-            items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>+</span><span style='color:#008c00; '>1</span><span style='color:#308080; '>]</span> <span style='color:#308080; '>=</span> items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>]</span><span style='color:#406080; '>;</span>
-        <span style='color:#406080; '>}</span>
+	<!-- HTML generated using hilite.me --><div style="background: #f0f3f3; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #006699; font-weight: bold">function</span> quickSort(items, start, end) {
 
-        items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>+</span><span style='color:#008c00; '>1</span><span style='color:#308080; '>]</span> <span style='color:#308080; '>=</span> value<span style='color:#406080; '>;</span>
-    <span style='color:#406080; '>}</span>
+	<span style="color: #006699; font-weight: bold">var</span> pivot_index;		<span style="color: #0099FF; font-style: italic">// returned by the call to partition.</span>
+	
+	<span style="color: #006699; font-weight: bold">if</span> (start <span style="color: #555555">&lt;</span> end) {
+		pivot_index <span style="color: #555555">=</span> partition(items, start, end);
+	
+		quicksort(items, start, pivot_index <span style="color: #555555">-</span> <span style="color: #FF6600">1</span>);
+		quicksort(items, pivot_index <span style="color: #555555">+</span> <span style="color: #FF6600">1</span>, end);
+	}
+}
+
+<span style="color: #006699; font-weight: bold">function</span> partition(items, start, end){
+	
+	<span style="color: #006699; font-weight: bold">var</span> i     		<span style="color: #555555">=</span> start <span style="color: #555555">-</span> <span style="color: #FF6600">1</span>,  	<span style="color: #0099FF; font-style: italic">// The start edge in the smaller half</span>
+		j     		<span style="color: #555555">=</span> start,    	<span style="color: #0099FF; font-style: italic">// The finished half of large half </span>
+		pivot 		<span style="color: #555555">=</span> (start <span style="color: #555555">+</span> end),<span style="color: #0099FF; font-style: italic">// The location of the pivot. </span>
+		pivot_value <span style="color: #555555">=</span> items[pivot],	<span style="color: #0099FF; font-style: italic">// Value to compare against.</span>
+		temp;				<span style="color: #0099FF; font-style: italic">// Used for swaps</span>
+
+
+    <span style="color: #0099FF; font-style: italic">// move the pivot to the end of the list: </span>
+	temp <span style="color: #555555">=</span> items[end];
+	items[end] <span style="color: #555555">=</span> items[pivot];
+	items[pivot] <span style="color: #555555">=</span> temp;
+	
+    <span style="color: #0099FF; font-style: italic">// move the numbers to their respective halves      </span>
+    <span style="color: #006699; font-weight: bold">while</span> j <span style="color: #555555">&lt;</span> end<span style="color: #555555">:</span>
+        <span style="color: #006699; font-weight: bold">if</span> items[j] <span style="color: #555555">&lt;</span> pivot_value<span style="color: #555555">:</span>
+            i <span style="color: #555555">=</span> i <span style="color: #555555">+</span> <span style="color: #FF6600">1</span>
+			
+			temp     <span style="color: #555555">=</span> items[i];
+			items[i] <span style="color: #555555">=</span> items[j];
+			items[j] <span style="color: #555555">=</span> temp;
+			
+            j <span style="color: #555555">=</span> j <span style="color: #555555">+</span> <span style="color: #FF6600">1</span>  
     
-    <span style='color:#200080; font-weight:bold; '>return</span> items<span style='color:#406080; '>;</span>
-<span style='color:#406080; '>}</span>
-</pre>
+		<span style="color: #0099FF; font-style: italic">// the number is already on the correct side, so you only increase j</span>
+        <span style="color: #006699; font-weight: bold">else</span><span style="color: #555555">:</span> 
+            j <span style="color: #555555">=</span> j <span style="color: #555555">+</span> <span style="color: #FF6600">1</span>  
+            
+	<span style="color: #0099FF; font-style: italic">/* </span>
+<span style="color: #0099FF; font-style: italic">	 * at this point, all elements from 0 to i are less than the pivot.</span>
+<span style="color: #0099FF; font-style: italic">	 * elements from i + 1 to j are greater than the pivot.</span>
+<span style="color: #0099FF; font-style: italic">	 * the last element is the pivot.</span>
+<span style="color: #0099FF; font-style: italic">	 * Thus we only need to swap the pivot into the correct place, i+1</span>
+<span style="color: #0099FF; font-style: italic">	 */</span> 
+	temp         <span style="color: #555555">=</span> items[i <span style="color: #555555">+</span> <span style="color: #FF6600">1</span>];
+	items[i <span style="color: #555555">+</span> <span style="color: #FF6600">1</span>] <span style="color: #555555">=</span> items[end];
+	items[end]   <span style="color: #555555">=</span> temp;
+
+	<span style="color: #0099FF; font-style: italic">// return the location of the pivot value.</span>
+	<span style="color: #006699; font-weight: bold">return</span> i <span style="color: #555555">+</span> <span style="color: #FF6600">1</span> 
+}
+</pre></div>
+
 
     </div>
 </body>
