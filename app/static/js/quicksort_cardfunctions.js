@@ -19,10 +19,8 @@ function createCards(globals) {
     var BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_blue.svg';
     var SORTED_BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_red.svg';
     var FOREGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Ornamental_deck_';
-	//var cardNumbers = ['2','3','4','5','6','7','8','9','10','Jack','Queen', 'King', 'Ace', '2', '3', '4'];
-	//var values = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-	var cardNumbers = ['Ace', 'King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2', 'Ace', 'King', 'Queen'];	
-	var values = [13,12,11,10,9,8,7,6,5,4,3,2,1];	
+	var cardNumbers = ['2','3','4','5','6','7','8','9','10','Jack','Queen', 'King', 'Ace', '2', '3', '4'];
+	var values = [1,2,3,4,5,6,7,8,9,10,11,12,13];
 	var cardSuits = ['spades', 'clubs', 'diamonds', 'hearts', 'spades', 'clubs', 'diamonds', 'hearts', 'spades', 'clubs', 'diamonds', 'diamonds', 'spades', 'clubs', 'diamonds', 'hearts'];
 
     // Randomized array of cards
@@ -135,7 +133,6 @@ function flipOver(globals, id) {
  * @param globals - the object containing global variables
  */
 function setSorted(globals, id) {
-	alert(id);
     var cards = globals.cards;
     cards[id].sorted = true;
     cards[id].flipped = false;
