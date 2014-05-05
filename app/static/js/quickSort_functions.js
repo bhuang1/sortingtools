@@ -40,16 +40,16 @@ function chainSort(globals) {
 	var pindex = globals.pivot_pos;
 	var pval = globals.pivot_value;
 	var cardArray = globals.cardArray;
-	
+
 	
 	for (var i=pindex + 1; i < cardArray[pindex].rightPivot; i++){
-		if (cardArray[i].value > pval){
+		if (cardArray[i].value < pval){
 			return false;
 		}
 	}
 	
 	for(var i=pindex - 1; i > cardArray[pindex].leftPivot ; i--){
-		if (cardArray[i].value < pval) {
+		if (cardArray[i].value > pval) {
 			return false;
 		}
 	}
