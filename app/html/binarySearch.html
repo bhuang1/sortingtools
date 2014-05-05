@@ -110,34 +110,27 @@
     <!-- linked to the div below by a few lines of javascript at the very beginning of our code -->
     <!-- messy code due to syntax highlighting -->
     <button id="hintButton" type="button" class="btn btn-info" rel="popover" data-placement="top" data-title="Binary Search">Hints</button>
-    <div id="popover_content_wrapper" style="display: none"> <pre style='color:#000020;background:#f6f8ff;'><body style='color:#000020; background:#f6f8ff; '><pre>
-<span style='color:#200080; font-weight:bold; '>function</span> insertionSort<span style='color:#308080; '>(</span>items<span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
-
-    <span style='color:#200080; font-weight:bold; '>var</span> len     <span style='color:#308080; '>=</span> items<span style='color:#308080; '>.</span>length<span style='color:#308080; '>,</span>     <span style='color:#595979; '>// number of items in the array</span>
-        value<span style='color:#308080; '>,</span>                      <span style='color:#595979; '>// the value currently being compared</span>
-        i<span style='color:#308080; '>,</span>                          <span style='color:#595979; '>// index into unsorted section</span>
-        j<span style='color:#406080; '>;</span>                          <span style='color:#595979; '>// index into sorted section</span>
-    
-    <span style='color:#200080; font-weight:bold; '>for</span> <span style='color:#308080; '>(</span>i<span style='color:#308080; '>=</span><span style='color:#008c00; '>0</span><span style='color:#406080; '>;</span> i <span style='color:#308080; '>&lt;</span> len<span style='color:#406080; '>;</span> i<span style='color:#308080; '>++</span><span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
-    
-        <span style='color:#595979; '>// store the current value because it may shift later</span>
-        value <span style='color:#308080; '>=</span> items<span style='color:#308080; '>[</span>i<span style='color:#308080; '>]</span><span style='color:#406080; '>;</span>
-        
-        <span style='color:#595979; '>/*</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* Whenever the value in the sorted section is greater than the value</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* in the unsorted section, shift all items in the sorted section over</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;* by one. This creates space in which to insert the value.</span>
-<span style='color:#595979; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;*/</span>
-        <span style='color:#200080; font-weight:bold; '>for</span> <span style='color:#308080; '>(</span>j<span style='color:#308080; '>=</span>i<span style='color:#308080; '>-</span><span style='color:#008c00; '>1</span><span style='color:#406080; '>;</span> j <span style='color:#308080; '>></span> <span style='color:#308080; '>-</span><span style='color:#008c00; '>1</span> <span style='color:#308080; '>&amp;&amp;</span> items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>]</span> <span style='color:#308080; '>></span> value<span style='color:#406080; '>;</span> j<span style='color:#308080; '>--</span><span style='color:#308080; '>)</span> <span style='color:#406080; '>{</span>
-            items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>+</span><span style='color:#008c00; '>1</span><span style='color:#308080; '>]</span> <span style='color:#308080; '>=</span> items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>]</span><span style='color:#406080; '>;</span>
-        <span style='color:#406080; '>}</span>
-
-        items<span style='color:#308080; '>[</span>j<span style='color:#308080; '>+</span><span style='color:#008c00; '>1</span><span style='color:#308080; '>]</span> <span style='color:#308080; '>=</span> value<span style='color:#406080; '>;</span>
-    <span style='color:#406080; '>}</span>
-    
-    <span style='color:#200080; font-weight:bold; '>return</span> items<span style='color:#406080; '>;</span>
-<span style='color:#406080; '>}</span>
-</pre>
+    <div id="popover_content_wrapper" style="display: none">
+<!-- HTML generated using hilite.me --><div style="background: #f0f3f3; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #006699; font-weight: bold">function</span> binarySearch(items, target, start, end) {
+	
+	<span style="color: #006699; font-weight: bold">var</span> midpoint <span style="color: #555555">=</span> (start <span style="color: #555555">+</span> end) <span style="color: #555555">/</span> <span style="color: #FF6600">2</span>;
+	
+	<span style="color: #0099FF; font-style: italic">// If the array is too small, return null, we did not find the target.</span>
+	<span style="color: #006699; font-weight: bold">if</span> end <span style="color: #555555">&lt;</span> start { <span style="color: #006699; font-weight: bold">return</span> <span style="color: #006699; font-weight: bold">null</span>; }
+	
+	<span style="color: #0099FF; font-style: italic">// If the value at index midpoint is the same as the target, return the index.</span>
+	<span style="color: #006699; font-weight: bold">if</span> (items[midpoint] <span style="color: #555555">==</span> target) { <span style="color: #006699; font-weight: bold">return</span> midpoint; }
+	
+	<span style="color: #0099FF; font-style: italic">// Otherwise, figure out which half is relevant and recurse.</span>
+	<span style="color: #006699; font-weight: bold">if</span> (items[midpoint] <span style="color: #555555">&lt;</span>  target) {
+		<span style="color: #006699; font-weight: bold">return</span> binarySearch(items, target, midpoint <span style="color: #555555">+</span> <span style="color: #FF6600">1</span>, end);
+	}
+	
+	<span style="color: #006699; font-weight: bold">else</span> {
+		<span style="color: #006699; font-weight: bold">return</span> binarySearch(items, target, start, midpoint <span style="color: #555555">-</span> <span style="color: #FF6600">1</span>);		
+	}
+}
+</pre></div>
 
     </div>
 </body>
