@@ -47,7 +47,7 @@ function autoSort(cards, goal) {
     var guess = Math.floor((end + start)/2);
     var steps = ['consider:'+guess]
     for ( ; cards[guess] != goal; ) {
-        if (cards[guess] > goal) {
+        if (cards[guess] < goal) {
             steps.push('arrow:l'+guess);
             end = guess;
         } else {
