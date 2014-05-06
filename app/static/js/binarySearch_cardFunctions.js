@@ -20,8 +20,9 @@ function createCards(globals) {
     var BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_blue.svg';
     var SORTED_BACKGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Card_backs_grid_red.svg';
     var FOREGROUND = 'http://openclipart.org/people/nicubunu/nicubunu_Ornamental_deck_';
-    var cardNumbers = ['King', 'Queen', 'Jack', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
-    var values = [13,12,11,10,9,8,7,6,5,4,3,2];
+	var cardNumbers = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];	
+    var values = [2,3,4,5,6,7,8,9,10,11,12,13]
+
     var cardSuits = ['clubs', 'diamonds'];
 
     // Randomized array of cards
@@ -185,7 +186,7 @@ function isTarget(globals, cardIndex){
 function showArrow(globals, cardIndex) {
     var cardValue = globals.cards[cardIndex].value
 
-    if (globals.targetValue < cardValue){
+    if (globals.targetValue > cardValue){
         $("#r"+ cardIndex).show();
     } else{
         $("#l"+ (parseInt(cardIndex) + globals.NUM_CARDS)).show(); 
