@@ -1,0 +1,24 @@
+Insertion Sort
+
+Insertion sort is a simple algorithm best used to sort a list with few elements. It works the same as if you would sort a bridge or gin rummy hand. Think of it like this: you start with an empty left hand and the cards face down on a table. One card at a time is removed from the table and inserted into the correct position in the left hand. To determine the correct position of the card, compare the card with each of the cards already in the hand (from right to left).
+
+More formally:
+1.	Begin with the current value as the second element in the input list
+2.	Check the previous value of the input list. If the previous value is greater than the current value, slide the previous value ahead of the current value. Repeat this step until you reach a previous value that is less than the current value.
+3.	Slide the current value ahead of the previous value you just reached.
+4.	Repeat for the remainder of elements (from the second element onwards) in the input list.
+
+Insertion Sort Pseudocode
+
+insertionSort(inputList, n) {
+	for i = 1 to n {
+		currentVal = inputList[i];
+		j = i - 1;
+		leftVal = inputList[j];
+		while (j > 0) and (leftVal > currentVal) {
+			inputList[j+1] = leftVal;
+			j = j - 1;
+		}
+		inputList[j+1] = currentVal;
+	}
+}
